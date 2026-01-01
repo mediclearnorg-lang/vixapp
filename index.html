@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Vix Crash Ultimate</title>
+    <title>Vix Crash App</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;500;700;900&display=swap" rel="stylesheet">
     
@@ -11,79 +11,103 @@
         :root {
             --bg-dark: #0f172a; --bg-card: #1e293b; --primary: #0088cc;
             --green: #22c55e; --red: #ef4444; --yellow: #f59e0b;
-            --text: #f1f5f9; --border: #334155;
-            --nav-bg: #1e293b; --blue-card: #1d4ed8;
+            --text: #f1f5f9; --border: #334155; --blue-card: #1d4ed8;
         }
         * { box-sizing: border-box; outline: none; -webkit-tap-highlight-color: transparent; font-family: 'Vazirmatn', sans-serif !important; }
         body { background-color: var(--bg-dark); color: var(--text); margin: 0; height: 100vh; display: flex; flex-direction: column; overflow: hidden; user-select: none; }
 
-        /* --- Header --- */
+        /* Header */
         .header { padding: 10px 15px; background: var(--bg-card); display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); z-index: 50; }
         .user-info { display: flex; align-items: center; gap: 8px; font-weight: bold; }
         .avatar { width: 32px; height: 32px; border-radius: 50%; background: var(--primary); display: flex; justify-content: center; align-items: center; color: white; }
         .wallet-pill { background: rgba(0,0,0,0.3); border: 1px solid var(--primary); padding: 5px 12px; border-radius: 20px; font-size: 0.85rem; cursor: pointer; display: flex; gap: 5px; }
 
-        /* --- Tabs & Content --- */
+        /* Audio Panel (New) */
+        .audio-panel { position: absolute; top: 60px; left: 10px; z-index: 60; display: flex; flex-direction: column; gap: 10px; }
+        .audio-btn { width: 35px; height: 35px; background: rgba(0,0,0,0.5); border: 1px solid var(--border); border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; color: white; font-size: 1.2rem; }
+        .audio-btn.off { opacity: 0.5; color: #ef4444; }
+
+        /* Tabs */
         .tab-content { flex: 1; display: none; flex-direction: column; overflow-y: auto; position: relative; }
         .tab-content.active { display: flex; }
 
-        /* GAME TAB */
+        /* Game Stage */
         .stage { flex: 1; position: relative; background: radial-gradient(circle at center, #334155 0%, #0f172a 80%); display: flex; justify-content: center; align-items: center; overflow: hidden; }
         canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
         .center-info { position: absolute; text-align: center; z-index: 10; pointer-events: none; }
         .multiplier { font-size: 4.5rem; font-weight: 900; text-shadow: 0 5px 30px rgba(0,0,0,0.5); }
         
+        /* Controls */
         .controls { background: var(--bg-card); padding: 15px; border-top: 1px solid var(--border); }
         .control-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 8px; }
         .input-label { font-size: 0.75rem; color: #94a3b8; margin-bottom: 4px; display: block; }
         .input-box { background: var(--bg-dark); border: 1px solid var(--border); border-radius: 10px; height: 45px; display: flex; padding: 0 10px; align-items: center; }
         .input-box input { background: transparent; border: none; color: white; width: 100%; text-align: center; font-size: 1.1rem; font-weight: bold; }
         
-        .percent-row { display: flex; gap: 5px; justify-content: space-between; }
-        .perc-btn { flex: 1; background: #334155; color: #cbd5e1; border: none; border-radius: 6px; padding: 8px 0; font-size: 0.8rem; font-weight: bold; cursor: pointer; }
-        .main-btn { width: 100%; padding: 16px; border-radius: 12px; font-size: 1.2rem; font-weight: 800; border: none; margin-top: 10px; cursor: pointer; transition: 0.1s; position: relative; }
+        .quick-row { display: flex; gap: 5px; justify-content: space-between; margin-bottom: 10px; }
+        .quick-btn { flex: 1; background: #334155; color: #cbd5e1; border: none; border-radius: 6px; padding: 8px 0; font-size: 0.8rem; font-weight: bold; cursor: pointer; }
+        .main-btn { width: 100%; padding: 16px; border-radius: 12px; font-size: 1.2rem; font-weight: 800; border: none; cursor: pointer; transition: 0.1s; position: relative; }
         .btn-green { background: var(--green); color: #022c22; box-shadow: 0 4px 0 #14532d; }
         .btn-green:active { transform: translateY(4px); box-shadow: none; }
         .btn-yellow { background: var(--yellow); color: #451a03; box-shadow: 0 4px 0 #b45309; }
         .btn-disabled { background: #334155; color: #94a3b8; }
 
-        /* WALLET TAB (RESTORED) */
-        .w-tabs { display: flex; gap: 10px; padding: 15px; background: #0f172a; }
-        .w-tab { flex: 1; padding: 10px; border: 1px solid var(--border); border-radius: 8px; background: transparent; color: #94a3b8; font-weight: bold; cursor: pointer; }
+        /* Centered Wallet & Vault UI */
+        .w-tabs { display: flex; gap: 10px; padding: 15px; background: #0f172a; justify-content: center; }
+        .w-tab { flex: 1; padding: 10px; border: 1px solid var(--border); border-radius: 8px; background: transparent; color: #94a3b8; font-weight: bold; cursor: pointer; max-width: 100px;}
         .w-tab.active { background: var(--primary); color: white; border-color: var(--primary); }
         
-        .w-card { background: var(--bg-card); margin: 15px; padding: 15px; border-radius: 15px; border: 1px solid var(--border); }
-        .exchange-row { display: flex; justify-content: space-between; align-items: center; margin: 10px 0; background: #0f172a; padding: 10px; border-radius: 10px; border: 1px solid var(--border); }
-        .ex-inp { background: transparent; border: none; color: white; font-size: 1.2rem; font-weight: bold; width: 100px; }
-        .rate-badge { text-align: center; font-size: 0.8rem; color: var(--green); margin-bottom: 10px; background: rgba(34, 197, 94, 0.1); padding: 5px; border-radius: 5px; }
+        .w-card { background: var(--bg-card); margin: 15px; padding: 20px; border-radius: 15px; border: 1px solid var(--border); text-align: center; }
+        .exchange-row { display: flex; justify-content: space-between; align-items: center; margin: 10px auto; background: #0f172a; padding: 10px; border-radius: 10px; border: 1px solid var(--border); max-width: 300px; }
+        .ex-inp { background: transparent; border: none; color: white; font-size: 1.2rem; font-weight: bold; width: 100px; text-align: center;}
         
-        .copy-box { background: #0f172a; padding: 10px; border-radius: 8px; font-family: monospace; border: 1px dashed var(--border); display: flex; justify-content: space-between; align-items: center; margin-top: 5px; font-size: 0.85rem; color: var(--yellow); }
+        .rate-badge { text-align: center; font-size: 0.8rem; color: var(--green); margin-bottom: 10px; background: rgba(34, 197, 94, 0.1); padding: 5px; border-radius: 5px; display: inline-block;}
+        .copy-box { background: #0f172a; padding: 10px; border-radius: 8px; font-family: monospace; border: 1px dashed var(--border); display: flex; justify-content: space-between; align-items: center; margin: 5px auto; font-size: 0.85rem; color: var(--yellow); max-width: 300px; cursor: pointer;}
 
-        /* CHAT & MISSIONS & LEADERBOARD (Simplified Styles) */
-        .chat-container { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
-        .chat-msg { background: rgba(255,255,255,0.05); padding: 8px 12px; border-radius: 8px; font-size: 0.9rem; }
+        /* Missions */
         .mission-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 15px; }
-        .mission-card { background: var(--blue-card); border-radius: 15px; padding: 15px; text-align: center; position: relative; cursor: pointer; }
-        .lb-item { display: flex; justify-content: space-between; padding: 12px; border-bottom: 1px solid var(--border); }
-
+        .mission-card { background: var(--blue-card); border-radius: 15px; padding: 15px; text-align: center; cursor: pointer; position: relative;}
+        .mission-card.done { opacity: 0.5; filter: grayscale(1); }
+        
+        /* Wheel */
+        .wheel-container { display: flex; flex-direction: column; align-items: center; padding: 20px; }
+        .wheel-outer { width: 280px; height: 280px; border-radius: 50%; border: 5px solid var(--yellow); position: relative; overflow: hidden; transition: transform 4s cubic-bezier(0.1, 0.7, 0.1, 1); background: conic-gradient(
+            #ef4444 0deg 51.4deg,   /* 1 */
+            #3b82f6 51.4deg 102.8deg, /* 2 */
+            #22c55e 102.8deg 154.2deg, /* 3 */
+            #a855f7 154.2deg 205.6deg, /* 4 */
+            #f97316 205.6deg 257deg,   /* 5 */
+            #eab308 257deg 308.4deg,   /* 6 */
+            #64748b 308.4deg 360deg    /* 7 */
+        ); box-shadow: 0 0 20px rgba(245, 158, 11, 0.3); }
+        .wheel-arrow { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); font-size: 2rem; z-index: 10; text-shadow: 0 2px 2px black; color: white;}
+        
         /* Nav */
-        .nav-bar { display: flex; background: var(--nav-bg); padding: 8px 0; border-top: 1px solid var(--border); justify-content: space-around; z-index: 50; }
+        .nav-bar { display: flex; background: #1e293b; padding: 8px 0; border-top: 1px solid var(--border); justify-content: space-around; z-index: 50; }
         .nav-item { background: none; border: none; color: #64748b; display: flex; flex-direction: column; align-items: center; font-size: 0.7rem; gap: 4px; cursor: pointer; }
         .nav-item.active { color: var(--primary); }
         .nav-item span { font-size: 1.4rem; }
-
+        
         /* Alert */
-        .alert-box { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: var(--green); padding: 10px 20px; border-radius: 20px; z-index: 1000; display: none; box-shadow: 0 5px 15px rgba(0,0,0,0.5); color: #022c22; font-weight: bold; }
+        .alert-box { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: var(--green); padding: 10px 20px; border-radius: 20px; z-index: 1000; display: none; box-shadow: 0 5px 15px rgba(0,0,0,0.5); color: #022c22; font-weight: bold; white-space: nowrap;}
+        
+        /* Select Box */
+        .custom-select { width: 100%; padding: 10px; background: #0f172a; border: 1px solid var(--border); color: white; border-radius: 8px; margin-bottom: 10px; text-align: center;}
     </style>
 </head>
 <body>
 
-    <audio id="snd-click" src="click.mp3"></audio>
+    <audio id="snd-bg" src="bg.mp3" loop></audio> <audio id="snd-click" src="click.mp3"></audio>
     <audio id="snd-crash" src="crash.mp3"></audio>
     <audio id="snd-win" src="win.mp3"></audio>
     <audio id="snd-start" src="start.mp3"></audio>
 
     <div id="alert" class="alert-box">پیام سیستم</div>
+
+    <div class="audio-panel">
+        <div class="audio-btn" id="btn-music" onclick="toggleMusic()">🎵</div>
+        <div class="audio-btn" id="btn-sfx" onclick="toggleSFX()">🔊</div>
+    </div>
 
     <div class="header">
         <div class="user-info">
@@ -114,11 +138,11 @@
                     <div class="input-box"><input type="number" id="auto-in" placeholder="مثلا 2.00"></div>
                 </div>
             </div>
-            <div class="percent-row" style="margin-bottom:10px">
-                <button class="perc-btn" onclick="setBet(0.1)">10%</button>
-                <button class="perc-btn" onclick="setBet(0.25)">25%</button>
-                <button class="perc-btn" onclick="setBet(0.5)">50%</button>
-                <button class="perc-btn" onclick="setBet(1.0)" style="color:var(--yellow)">MAX</button>
+            <div class="quick-row">
+                <button class="quick-btn" onclick="setBet(0.1)">10%</button>
+                <button class="quick-btn" onclick="setBet(0.25)">25%</button>
+                <button class="quick-btn" onclick="setBet(0.5)">50%</button>
+                <button class="quick-btn" onclick="setBet(1.0)" style="color:var(--yellow)">MAX</button>
             </div>
             <button id="main-btn" class="main-btn btn-disabled" disabled>بارگذاری...</button>
         </div>
@@ -126,12 +150,14 @@
 
     <div id="tab-wallet" class="tab-content">
         <div class="w-tabs">
-            <button class="w-tab active" onclick="setWTab('deposit', this)">واریز (خرید)</button>
-            <button class="w-tab" onclick="setWTab('withdraw', this)">برداشت (فروش)</button>
-            <button class="w-tab" onclick="setWTab('vault', this)">صندوق 🏦</button>
+            <button class="w-tab active" onclick="setWTab('deposit', this)">واریز</button>
+            <button class="w-tab" onclick="setWTab('withdraw', this)">برداشت</button>
+            <button class="w-tab" onclick="setWTab('vault', this)">صندوق</button>
         </div>
 
-        <div id="price-status" class="rate-badge" style="margin: 0 15px;">درحال دریافت قیمت تون...</div>
+        <div style="text-align:center; margin-top:10px;">
+             <div id="price-status" class="rate-badge">درحال دریافت قیمت...</div>
+        </div>
 
         <div id="view-deposit" style="display:block">
             <div class="w-card">
@@ -140,7 +166,7 @@
                     <input type="number" id="dep-ton" class="ex-inp" placeholder="TON" oninput="calcExchange('buy')">
                     <span style="color:var(--primary)">TON</span>
                 </div>
-                <div style="text-align:center; font-size:1.2rem">⬇</div>
+                <div style="font-size:1.2rem">⬇</div>
                 <div class="exchange-row">
                     <span id="dep-vix-res" style="font-size:1.2rem; font-weight:bold">0</span>
                     <span>VIX</span>
@@ -149,14 +175,14 @@
                 <hr style="border-color:var(--border); margin:15px 0">
                 
                 <div style="font-size:0.9rem; margin-bottom:5px; color:#94a3b8">۲. ارسال به آدرس زیر:</div>
-                <div class="copy-box" onclick="copyTxt('UQBd3Z2pwooAGJDDzI_xO67ZWskaK5zca4Vjar31KmIoE2Te')">
-                    <span>UQBd3Z...IoE2Te</span> 📋
+                <div class="copy-box" onclick="copyTxt('UQBSKUvXVMk96OM1UuwDFejNR62HVC9udRUNL1Xk1qsvUutO')">
+                    <span>UQBSKU...vUutO</span> 📋
                 </div>
-                <div style="font-size:0.8rem; margin-top:10px; color:#94a3b8">حتما کامنت (Memo) زیر را وارد کنید:</div>
-                <div class="copy-box" onclick="copyTxt('12345678')">
-                    <span style="font-size:1.1rem">12345678</span> 📋
+                <div style="font-size:0.8rem; margin-top:10px; color:#94a3b8">ممو (Memo) اجباری:</div>
+                <div class="copy-box" onclick="copyTxt(user.id)">
+                    <span style="font-size:1.1rem" id="user-memo">...</span> 📋
                 </div>
-                <button class="main-btn btn-green" onclick="showAlert('منتظر تایید تراکنش...')">بررسی واریز</button>
+                <button class="main-btn btn-green" onclick="showAlert('درخواست ثبت شد. منتظر تایید...')">بررسی واریز</button>
             </div>
         </div>
 
@@ -167,126 +193,255 @@
                     <input type="number" id="wd-vix" class="ex-inp" placeholder="VIX" oninput="calcExchange('sell')">
                     <span>VIX</span>
                 </div>
-                <div style="text-align:center; font-size:1.2rem">⬇</div>
+                <div class="quick-row" style="max-width:300px; margin:0 auto 10px auto">
+                    <button class="quick-btn" onclick="setWd(0.2)">20%</button>
+                    <button class="quick-btn" onclick="setWd(0.5)">50%</button>
+                    <button class="quick-btn" onclick="setWd(1.0)">MAX</button>
+                </div>
+
+                <div style="font-size:1.2rem">⬇</div>
                 <div class="exchange-row">
                     <span id="wd-ton-res" style="font-size:1.2rem; font-weight:bold">0</span>
                     <span>TON</span>
                 </div>
                 
                 <div style="margin-top:15px; font-size:0.9rem;">آدرس ولت تون:</div>
-                <input type="text" placeholder="آدرس ولت خود را وارد کنید" style="width:100%; padding:12px; background:#0f172a; border:1px solid var(--border); border-radius:8px; color:white; margin-top:5px">
+                <input type="text" placeholder="آدرس ولت خود را وارد کنید" style="width:100%; padding:12px; background:#0f172a; border:1px solid var(--border); border-radius:8px; color:white; margin-top:5px; text-align:center">
                 
-                <button class="main-btn btn-yellow" style="background:var(--red); color:white" onclick="showAlert('درخواست برداشت ثبت شد')">ثبت درخواست</button>
-                <div style="font-size:0.75rem; color:#94a3b8; margin-top:10px; text-align:center">حداقل برداشت: ۲۰۰۰ ویکس</div>
+                <button class="main-btn btn-yellow" style="background:var(--red); color:white; margin-top:15px" onclick="showAlert('درخواست برداشت ثبت شد')">ثبت درخواست</button>
+                <div style="font-size:0.75rem; color:#94a3b8; margin-top:10px;">حداقل برداشت: ۲۰۰۰ ویکس</div>
             </div>
         </div>
 
         <div id="view-vault" style="display:none">
-            <div class="w-card" style="text-align:center; background:linear-gradient(45deg, #1e293b, #0f172a)">
+            <div class="w-card" style="background:linear-gradient(45deg, #1e293b, #0f172a)">
                 <div style="font-size:3rem">🏦</div>
-                <div style="font-size:1.5rem; color:var(--yellow); font-weight:bold">0 VIX</div>
+                <div id="vault-bal" style="font-size:1.5rem; color:var(--yellow); font-weight:bold">0 VIX</div>
                 <div style="color:#94a3b8; font-size:0.9rem">موجودی صندوق</div>
-                <div style="background:rgba(16, 185, 129, 0.1); color:var(--green); padding:5px; border-radius:5px; margin:10px 0; font-size:0.9rem">سود روزانه: ۰.۰۵٪</div>
                 
-                <input type="number" placeholder="مقدار" style="width:100%; padding:10px; background:#0f172a; border:1px solid var(--border); color:white; border-radius:8px; margin-bottom:10px; text-align:center">
-                <div style="display:flex; gap:10px">
-                    <button class="main-btn btn-green" style="font-size:1rem; padding:10px" onclick="showAlert('واریز به صندوق انجام شد')">واریز</button>
-                    <button class="main-btn btn-yellow" style="font-size:1rem; padding:10px" onclick="showAlert('برداشت از صندوق انجام شد')">برداشت</button>
+                <div style="margin-top:15px; text-align:left; font-size:0.8rem; color:#94a3b8">مدت زمان:</div>
+                <select class="custom-select">
+                    <option>کوتاه مدت (سود روزانه ۰.۰۵٪)</option>
+                    <option>هفتگی (سود ۷ روز ۰.۵٪)</option>
+                    <option>ماهانه (سود ۳۰ روز ۳٪)</option>
+                </select>
+
+                <div style="text-align:left; font-size:0.8rem; color:#94a3b8">مبلغ:</div>
+                <input id="vault-in" type="number" placeholder="0" class="custom-select">
+                
+                <div class="quick-row">
+                    <button class="quick-btn" onclick="setVault(0.2)">20%</button>
+                    <button class="quick-btn" onclick="setVault(0.5)">50%</button>
+                    <button class="quick-btn" onclick="setVault(1.0)">MAX</button>
+                </div>
+
+                <div style="display:flex; gap:10px; margin-top:15px">
+                    <button class="main-btn btn-green" style="padding:10px; font-size:1rem" onclick="vaultOp(1)">واریز</button>
+                    <button class="main-btn btn-yellow" style="padding:10px; font-size:1rem" onclick="vaultOp(-1)">برداشت</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <div id="tab-chat" class="tab-content">
-        <div class="chat-container" id="chat-box">
-            </div>
-        <div style="padding:10px; display:flex; gap:10px; background:var(--bg-card)">
-            <input id="chat-in" style="flex:1; background:#334155; border:none; padding:10px; border-radius:8px; color:white;" placeholder="پیام...">
-            <button onclick="sendChat()" style="background:var(--primary); border:none; padding:0 15px; border-radius:8px; color:white;">➤</button>
-        </div>
-    </div>
-
     <div id="tab-missions" class="tab-content">
-        <div class="mission-grid">
-            <div class="mission-card" onclick="doTask(this, 100)">
-                <div style="font-size:2rem">📸</div>
-                <div>اینستاگرام</div>
-                <div style="background:rgba(0,0,0,0.3); padding:5px; border-radius:5px; margin-top:5px">100 VIX</div>
-            </div>
+        <div class="mission-grid" id="mission-container">
             </div>
     </div>
 
-    <div id="tab-leader" class="tab-content">
-        <div class="lb-item">
-            <div>🥇 Ali</div>
-            <div style="color:var(--green)">+50,000</div>
+    <div id="tab-wheel" class="tab-content">
+        <div style="text-align:center; padding:20px">
+            <h3 style="color:var(--yellow)">گردونه شانس 🎰</h3>
+            <p style="font-size:0.8rem; color:#cbd5e1">هزینه: ۱۰۰ ویکس</p>
+            <div class="wheel-container">
+                <div style="position:relative">
+                    <div class="wheel-arrow">⬇</div>
+                    <div class="wheel-outer" id="wheel"></div>
+                </div>
+                <button class="main-btn btn-green" style="margin-top:20px; width:200px" onclick="spinWheel()">بچرخون (100 V)</button>
+            </div>
+            <div style="font-size:0.8rem; color:#94a3b8; margin-top:10px">جوایز: 500، 100، 50، 20، پوچ</div>
         </div>
     </div>
 
     <div class="nav-bar">
         <button class="nav-item active" onclick="switchTab('game', this)"><span>🎮</span>بازی</button>
-        <button class="nav-item" onclick="switchTab('chat', this)"><span>💬</span>چت</button>
         <button class="nav-item" onclick="switchTab('missions', this)"><span>📋</span>ماموریت</button>
+        <button class="nav-item" onclick="switchTab('wheel', this)"><span>🎡</span>گردونه</button>
         <button class="nav-item" onclick="switchTab('wallet', this)"><span>💎</span>والت</button>
-        <button class="nav-item" onclick="switchTab('leader', this)"><span>🏆</span>برترین</button>
     </div>
 
 <script>
-    // --- Config & State ---
+    // --- 1. CONFIG & STATE ---
     const tg = window.Telegram.WebApp; tg.expand();
     const VIX_FIXED_PRICE = 0.015;
     let TON_LIVE_PRICE = 6.5; 
     let balance = 5000;
-    let user = tg.initDataUnsafe?.user || { first_name: 'Guest' };
+    let vaultBalance = 0;
+    
+    // User Info
+    let user = tg.initDataUnsafe?.user || { first_name: 'Guest', id: 123456 };
     document.getElementById('u-name').innerText = user.first_name;
+    document.getElementById('user-memo').innerText = user.id; // Memo is User ID
 
-    // --- Wallet Logic (RESTORED) ---
-    async function fetchPrice() {
-        try {
-            const res = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=the-open-network&vs_currencies=usd');
-            const data = await res.json();
-            if(data['the-open-network']) {
-                TON_LIVE_PRICE = data['the-open-network'].usd;
-            }
-        } catch(e) {} // Fail silently, use default
-        updateWalletUI();
-    }
+    // --- 2. AUDIO SYSTEM ---
+    let musicOn = false;
+    let sfxOn = true;
+    const bgMusic = document.getElementById('snd-bg');
+    bgMusic.volume = 0.3; // Low background volume
 
-    function updateWalletUI() {
-        const rate = Math.floor(TON_LIVE_PRICE / VIX_FIXED_PRICE);
-        document.getElementById('price-status').innerHTML = `نرخ لحظه‌ای: <b>1 TON = ${rate} VIX</b> ($${TON_LIVE_PRICE})`;
-    }
-
-    function calcExchange(mode) {
-        if(mode === 'buy') {
-            const ton = parseFloat(document.getElementById('dep-ton').value) || 0;
-            const vix = (ton * TON_LIVE_PRICE) / VIX_FIXED_PRICE;
-            document.getElementById('dep-vix-res').innerText = Math.floor(vix).toLocaleString();
+    function toggleMusic() {
+        musicOn = !musicOn;
+        const btn = document.getElementById('btn-music');
+        if(musicOn) {
+            bgMusic.play().catch(()=>{});
+            btn.classList.remove('off');
         } else {
-            const vix = parseFloat(document.getElementById('wd-vix').value) || 0;
-            const ton = (vix * VIX_FIXED_PRICE) / TON_LIVE_PRICE;
-            document.getElementById('wd-ton-res').innerText = ton.toFixed(4);
+            bgMusic.pause();
+            btn.classList.add('off');
         }
     }
 
-    function setWTab(tab, btn) {
-        document.getElementById('view-deposit').style.display = 'none';
-        document.getElementById('view-withdraw').style.display = 'none';
-        document.getElementById('view-vault').style.display = 'none';
+    function toggleSFX() {
+        sfxOn = !sfxOn;
+        document.getElementById('btn-sfx').classList.toggle('off');
+    }
+
+    function playSnd(id) { 
+        if(!sfxOn && id !== 'snd-bg') return;
+        try{const a=document.getElementById(id); a.currentTime=0; a.play().catch(()=>{});}catch(e){} 
+    }
+
+    // --- 3. MISSIONS DATA (EDIT HERE) ---
+    const missions = [
+        { id: 1, icon: '📸', title: 'اینستاگرام', reward: 100, link: 'https://instagram.com' },
+        { id: 2, icon: '✈️', title: 'کانال تلگرام', reward: 50, link: 'https://t.me/channel' },
+        { id: 3, icon: '📅', title: 'ورود روزانه', reward: 20, link: '#' },
+        { id: 4, icon: '🛍️', title: 'خرید اول', reward: 200, link: '#' },
+        { id: 5, icon: '🚕', title: 'کد تپسی', reward: 0, desc: 'جایزه خارجی' } // Example
+    ];
+
+    function loadMissions() {
+        const container = document.getElementById('mission-container');
+        container.innerHTML = '';
+        missions.forEach(m => {
+            const div = document.createElement('div');
+            div.className = 'mission-card';
+            div.onclick = () => doTask(div, m.reward);
+            div.innerHTML = `
+                <div style="font-size:2rem">${m.icon}</div>
+                <div>${m.title}</div>
+                <div style="background:rgba(0,0,0,0.3); padding:5px; border-radius:5px; margin-top:5px; font-size:0.9rem">
+                    ${m.reward > 0 ? m.reward + ' VIX' : m.desc}
+                </div>
+            `;
+            container.appendChild(div);
+        });
+    }
+
+    function doTask(el, r) {
+        if(el.classList.contains('done')) return;
+        playSnd('snd-win');
+        if(r > 0) {
+            balance += r;
+            updateUI();
+            showAlert(`${r} ویکس دریافت شد!`);
+        } else {
+            showAlert('ماموریت انجام شد');
+        }
+        el.classList.add('done');
+    }
+
+    // --- 4. WHEEL LOGIC (7 Segments) ---
+    // Segments: 1:Loss, 2:20, 3:50, 4:100, 5:Loss, 6:500, 7:BreakEven
+    const segments = [0, 20, 50, 100, 0, 500, 100]; 
+    let spinning = false;
+
+    function spinWheel() {
+        if(spinning) return;
+        if(balance < 100) return showAlert('موجودی ناکافی (۱۰۰ ویکس)');
         
-        document.getElementById('view-' + tab).style.display = 'block';
+        balance -= 100; updateUI();
+        spinning = true;
         
-        document.querySelectorAll('.w-tab').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
+        const wheel = document.getElementById('wheel');
+        // Random segment (0-6)
+        const segmentIndex = Math.floor(Math.random() * 7);
+        const segmentDegree = 360 / 7;
+        // Calculate rotation: Spin 5 times + land on segment center
+        const rotate = (360 * 5) + (segmentIndex * segmentDegree) + (segmentDegree/2); 
+        
+        // CSS rotation needs negative to match index if we go clockwise, logic depends on gradient
+        // Let's simplify: rotate huge amount + random
+        const randomDeg = 1800 + Math.floor(Math.random() * 360);
+        
+        wheel.style.transform = `rotate(-${randomDeg}deg)`;
+        
+        setTimeout(() => {
+            // Determine result based on visual landing (simplified logic for demo)
+            // For real random:
+            const result = [0, 20, 50, 100, 0, 500, 100][Math.floor(Math.random()*7)];
+            
+            if(result > 0) {
+                playSnd('snd-win');
+                balance += result;
+                showAlert(`تبریک! ${result} ویکس بردی`);
+            } else {
+                playSnd('snd-crash');
+                showAlert('پوچ! دوباره تلاش کن');
+            }
+            updateUI();
+            spinning = false;
+            wheel.style.transform = 'rotate(0deg)'; // Reset (optional)
+        }, 4000);
+    }
+
+    // --- 5. WALLET & VAULT CONTROLS ---
+    function setWTab(t, b) {
+        document.getElementById('view-deposit').style.display='none';
+        document.getElementById('view-withdraw').style.display='none';
+        document.getElementById('view-vault').style.display='none';
+        document.getElementById('view-'+t).style.display='block';
+        document.querySelectorAll('.w-tab').forEach(e=>e.classList.remove('active'));
+        b.classList.add('active');
         playSnd('snd-click');
     }
-
-    function copyTxt(txt) {
-        navigator.clipboard.writeText(txt);
-        showAlert('کپی شد!');
+    
+    // Auto calculators
+    function calcExchange(m) {
+        if(m==='buy') {
+            const t = parseFloat(document.getElementById('dep-ton').value)||0;
+            document.getElementById('dep-vix-res').innerText = Math.floor((t*TON_LIVE_PRICE)/VIX_FIXED_PRICE).toLocaleString();
+        } else {
+            const v = parseFloat(document.getElementById('wd-vix').value)||0;
+            document.getElementById('wd-ton-res').innerText = ((v*VIX_FIXED_PRICE)/TON_LIVE_PRICE).toFixed(4);
+        }
+    }
+    
+    // Quick Buttons
+    function setWd(p) { 
+        document.getElementById('wd-vix').value = Math.floor(balance * p);
+        calcExchange('sell');
+    }
+    function setVault(p) {
+        document.getElementById('vault-in').value = Math.floor(balance * p);
+    }
+    function vaultOp(d) {
+        const v = parseInt(document.getElementById('vault-in').value)||0;
+        if(v<=0) return;
+        if(d===1) {
+            if(v > balance) return showAlert('موجودی ناکافی');
+            balance -= v; vaultBalance += v;
+            showAlert('واریز به صندوق انجام شد');
+        } else {
+            if(v > vaultBalance) return showAlert('موجودی صندوق ناکافی');
+            vaultBalance -= v; balance += v;
+            showAlert('برداشت از صندوق انجام شد');
+        }
+        updateUI();
+        document.getElementById('vault-bal').innerText = vaultBalance.toLocaleString() + ' VIX';
     }
 
-    // --- Core Logic (Tabs & UI) ---
+    // --- 6. CORE UI ---
     function switchTab(id, btn) {
         document.querySelectorAll('.tab-content').forEach(e => e.classList.remove('active'));
         document.getElementById('tab-' + id).classList.add('active');
@@ -296,7 +451,6 @@
         }
         playSnd('snd-click');
         if(id === 'game') resize();
-        if(id === 'wallet') fetchPrice(); // Fetch price when opening wallet
     }
     
     function updateUI() { document.getElementById('ui-bal').innerText = balance.toLocaleString(); }
@@ -304,9 +458,9 @@
         const b=document.getElementById('alert'); b.innerText=msg; b.style.display='block'; 
         setTimeout(()=>b.style.display='none', 2000); 
     }
-    function playSnd(id) { try{document.getElementById(id).currentTime=0;document.getElementById(id).play().catch(()=>{});}catch(e){} }
+    function copyTxt(t) { navigator.clipboard.writeText(t); showAlert('کپی شد'); }
 
-    // --- GAME ENGINE (Vix Crash) ---
+    // --- 7. GAME ENGINE (Vix Crash) ---
     const cvs = document.getElementById('gameCanvas');
     const ctx = cvs.getContext('2d');
     const elGame = { multi:document.getElementById('multi-disp'), status:document.getElementById('status-txt'), btn:document.getElementById('main-btn'), bet:document.getElementById('bet-in'), auto:document.getElementById('auto-in') };
@@ -352,14 +506,10 @@
         else{b.className='main-btn btn-disabled';b.innerText='صبر کنید...';b.disabled=true;}
     }
     function draw(v,c) { ctx.clearRect(0,0,cvs.width,cvs.height); let p=Math.min((v-1)/5,1); let x=p*(cvs.width-50); let y=cvs.height-(p*(cvs.height-100))-30; ctx.beginPath();ctx.lineWidth=4;ctx.strokeStyle=c?'#ef4444':'#22c55e';ctx.moveTo(0,cvs.height);ctx.quadraticCurveTo(x/2,cvs.height,x,y);ctx.stroke();ctx.beginPath();ctx.fillStyle='white';ctx.arc(x,y,6,0,Math.PI*2);ctx.fill(); }
-    window.setBet=(p)=>{playSnd('snd-click'); elGame.bet.value=Math.floor(balance*p);}
-
-    // --- Chat & Missions ---
-    function sendChat(){ const i=document.getElementById('chat-in'); if(i.value){ const d=document.createElement('div'); d.className='chat-msg'; d.innerHTML=`<b>${user.first_name}</b>: ${i.value}`; document.getElementById('chat-box').appendChild(d); i.value=''; } }
-    function doTask(c,r){ if(!c.classList.contains('done')){ playSnd('snd-win'); balance+=r; updateUI(); c.classList.add('done'); showAlert(r+' ویکس دریافت شد'); } }
+    window.setBet=(p)=>{playSnd('snd-click'); document.getElementById('bet-in').value=Math.floor(balance*p);}
 
     // Init
-    resize(); updateUI(); fetchPrice(); gameLoop(); setInterval(fetchPrice, 60000);
+    loadMissions(); resize(); updateUI(); gameLoop();
 </script>
 </body>
 </html>

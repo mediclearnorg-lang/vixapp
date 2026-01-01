@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Vix Crash Super App</title>
+    <title>Vix Crash Ultimate</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;500;700;900&display=swap" rel="stylesheet">
     
@@ -23,11 +23,11 @@
         .avatar { width: 32px; height: 32px; border-radius: 50%; background: var(--primary); display: flex; justify-content: center; align-items: center; color: white; }
         .wallet-pill { background: rgba(0,0,0,0.3); border: 1px solid var(--primary); padding: 5px 12px; border-radius: 20px; font-size: 0.85rem; cursor: pointer; display: flex; gap: 5px; }
 
-        /* --- Main Content Areas (Tabs) --- */
+        /* --- Tabs & Content --- */
         .tab-content { flex: 1; display: none; flex-direction: column; overflow-y: auto; position: relative; }
         .tab-content.active { display: flex; }
 
-        /* GAME TAB STYLES (UNCHANGED CONTROLS) */
+        /* GAME TAB */
         .stage { flex: 1; position: relative; background: radial-gradient(circle at center, #334155 0%, #0f172a 80%); display: flex; justify-content: center; align-items: center; overflow: hidden; }
         canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
         .center-info { position: absolute; text-align: center; z-index: 10; pointer-events: none; }
@@ -41,66 +41,39 @@
         
         .percent-row { display: flex; gap: 5px; justify-content: space-between; }
         .perc-btn { flex: 1; background: #334155; color: #cbd5e1; border: none; border-radius: 6px; padding: 8px 0; font-size: 0.8rem; font-weight: bold; cursor: pointer; }
-        .perc-btn:active { background: #475569; }
-
         .main-btn { width: 100%; padding: 16px; border-radius: 12px; font-size: 1.2rem; font-weight: 800; border: none; margin-top: 10px; cursor: pointer; transition: 0.1s; position: relative; }
         .btn-green { background: var(--green); color: #022c22; box-shadow: 0 4px 0 #14532d; }
         .btn-green:active { transform: translateY(4px); box-shadow: none; }
         .btn-yellow { background: var(--yellow); color: #451a03; box-shadow: 0 4px 0 #b45309; }
         .btn-disabled { background: #334155; color: #94a3b8; }
 
-        /* CHAT TAB */
+        /* WALLET TAB (RESTORED) */
+        .w-tabs { display: flex; gap: 10px; padding: 15px; background: #0f172a; }
+        .w-tab { flex: 1; padding: 10px; border: 1px solid var(--border); border-radius: 8px; background: transparent; color: #94a3b8; font-weight: bold; cursor: pointer; }
+        .w-tab.active { background: var(--primary); color: white; border-color: var(--primary); }
+        
+        .w-card { background: var(--bg-card); margin: 15px; padding: 15px; border-radius: 15px; border: 1px solid var(--border); }
+        .exchange-row { display: flex; justify-content: space-between; align-items: center; margin: 10px 0; background: #0f172a; padding: 10px; border-radius: 10px; border: 1px solid var(--border); }
+        .ex-inp { background: transparent; border: none; color: white; font-size: 1.2rem; font-weight: bold; width: 100px; }
+        .rate-badge { text-align: center; font-size: 0.8rem; color: var(--green); margin-bottom: 10px; background: rgba(34, 197, 94, 0.1); padding: 5px; border-radius: 5px; }
+        
+        .copy-box { background: #0f172a; padding: 10px; border-radius: 8px; font-family: monospace; border: 1px dashed var(--border); display: flex; justify-content: space-between; align-items: center; margin-top: 5px; font-size: 0.85rem; color: var(--yellow); }
+
+        /* CHAT & MISSIONS & LEADERBOARD (Simplified Styles) */
         .chat-container { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
         .chat-msg { background: rgba(255,255,255,0.05); padding: 8px 12px; border-radius: 8px; font-size: 0.9rem; }
-        .chat-user { color: var(--primary); font-weight: bold; font-size: 0.8rem; }
-        .rain-alert { background: rgba(34, 197, 94, 0.2); border: 1px solid var(--green); padding: 10px; border-radius: 8px; text-align: center; animation: pulse 2s infinite; cursor: pointer; }
-        .chat-input-area { padding: 10px; background: var(--bg-card); display: flex; gap: 10px; }
-        
-        /* MISSIONS TAB (The Image Style) */
         .mission-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 15px; }
-        .mission-card { background: var(--blue-card); border-radius: 15px; padding: 15px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; height: 120px; position: relative; box-shadow: 0 4px 0 #1e3a8a; cursor: pointer; transition: transform 0.1s; }
-        .mission-card:active { transform: translateY(4px); box-shadow: none; }
-        .mission-icon { font-size: 2rem; margin-bottom: 5px; }
-        .mission-reward { background: rgba(0,0,0,0.3); padding: 3px 10px; border-radius: 10px; font-size: 0.8rem; margin-top: 5px; display: flex; align-items: center; gap: 4px; }
-        .check-mark { position: absolute; top: 5px; right: 5px; background: var(--green); border-radius: 50%; width: 20px; height: 20px; display: none; align-items: center; justify-content: center; font-size: 0.8rem; }
-        .card-completed .check-mark { display: flex; }
-        .card-completed { opacity: 0.6; filter: grayscale(1); }
+        .mission-card { background: var(--blue-card); border-radius: 15px; padding: 15px; text-align: center; position: relative; cursor: pointer; }
+        .lb-item { display: flex; justify-content: space-between; padding: 12px; border-bottom: 1px solid var(--border); }
 
-        /* LEADERBOARD TAB */
-        .lb-tabs { display: flex; padding: 10px; gap: 10px; }
-        .lb-tab { flex: 1; padding: 8px; background: var(--bg-dark); border: 1px solid var(--border); color: #94a3b8; border-radius: 8px; cursor: pointer; }
-        .lb-tab.active { background: var(--primary); color: white; border-color: var(--primary); }
-        .lb-list { padding: 0 15px; }
-        .lb-item { display: flex; justify-content: space-between; padding: 12px; border-bottom: 1px solid var(--border); align-items: center; }
-        .rank-badge { width: 25px; height: 25px; background: #334155; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 0.8rem; font-weight: bold; }
-        .rank-1 { background: #f59e0b; color: black; } 
-
-        /* LOTTERY TAB */
-        .wheel-container { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; padding: 20px; }
-        .wheel-outer { width: 280px; height: 280px; border-radius: 50%; border: 5px solid var(--yellow); position: relative; overflow: hidden; transition: transform 4s cubic-bezier(0.1, 0.7, 0.1, 1); box-shadow: 0 0 20px rgba(245, 158, 11, 0.3); background: conic-gradient(
-            #ef4444 0deg 60deg, 
-            #3b82f6 60deg 120deg, 
-            #22c55e 120deg 180deg, 
-            #a855f7 180deg 240deg, 
-            #f97316 240deg 300deg, 
-            #eab308 300deg 360deg
-        ); }
-        .wheel-arrow { position: absolute; top: -10px; left: 50%; transform: translateX(-50%); font-size: 2rem; z-index: 10; text-shadow: 0 2px 2px black; }
-        .spin-btn { margin-top: 30px; padding: 15px 40px; font-size: 1.2rem; border-radius: 30px; border: none; background: var(--primary); color: white; font-weight: bold; box-shadow: 0 5px 0 #005f8f; cursor: pointer; }
-        .spin-btn:active { transform: translateY(5px); box-shadow: none; }
-
-        /* WALLET MODAL (Already integrated in structure, simplified here) */
-        
-        /* --- Bottom Navigation --- */
+        /* Nav */
         .nav-bar { display: flex; background: var(--nav-bg); padding: 8px 0; border-top: 1px solid var(--border); justify-content: space-around; z-index: 50; }
         .nav-item { background: none; border: none; color: #64748b; display: flex; flex-direction: column; align-items: center; font-size: 0.7rem; gap: 4px; cursor: pointer; }
         .nav-item.active { color: var(--primary); }
         .nav-item span { font-size: 1.4rem; }
 
-        /* Helpers */
-        @keyframes pulse { 0% {transform: scale(1);} 50% {transform: scale(1.02);} 100% {transform: scale(1);} }
-        .hidden { display: none !important; }
-        .alert-box { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: var(--green); padding: 10px 20px; border-radius: 20px; z-index: 1000; display: none; box-shadow: 0 5px 15px rgba(0,0,0,0.5); }
+        /* Alert */
+        .alert-box { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: var(--green); padding: 10px 20px; border-radius: 20px; z-index: 1000; display: none; box-shadow: 0 5px 15px rgba(0,0,0,0.5); color: #022c22; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -109,7 +82,8 @@
     <audio id="snd-crash" src="crash.mp3"></audio>
     <audio id="snd-win" src="win.mp3"></audio>
     <audio id="snd-start" src="start.mp3"></audio>
-    <audio id="snd-spin" src="spin.mp3"></audio> <div id="alert" class="alert-box">پیام سیستم</div>
+
+    <div id="alert" class="alert-box">پیام سیستم</div>
 
     <div class="header">
         <div class="user-info">
@@ -133,15 +107,11 @@
             <div class="control-grid">
                 <div>
                     <span class="input-label">مبلغ شرط (VIX)</span>
-                    <div class="input-box">
-                        <input type="number" id="bet-in" value="100">
-                    </div>
+                    <div class="input-box"><input type="number" id="bet-in" value="100"></div>
                 </div>
                 <div>
                     <span class="input-label">خروج اتومات (X)</span>
-                    <div class="input-box">
-                        <input type="number" id="auto-in" placeholder="مثلا 2.00">
-                    </div>
+                    <div class="input-box"><input type="number" id="auto-in" placeholder="مثلا 2.00"></div>
                 </div>
             </div>
             <div class="percent-row" style="margin-bottom:10px">
@@ -154,102 +124,102 @@
         </div>
     </div>
 
+    <div id="tab-wallet" class="tab-content">
+        <div class="w-tabs">
+            <button class="w-tab active" onclick="setWTab('deposit', this)">واریز (خرید)</button>
+            <button class="w-tab" onclick="setWTab('withdraw', this)">برداشت (فروش)</button>
+            <button class="w-tab" onclick="setWTab('vault', this)">صندوق 🏦</button>
+        </div>
+
+        <div id="price-status" class="rate-badge" style="margin: 0 15px;">درحال دریافت قیمت تون...</div>
+
+        <div id="view-deposit" style="display:block">
+            <div class="w-card">
+                <div style="font-size:0.9rem; margin-bottom:5px; color:#94a3b8">۱. محاسبه مقدار:</div>
+                <div class="exchange-row">
+                    <input type="number" id="dep-ton" class="ex-inp" placeholder="TON" oninput="calcExchange('buy')">
+                    <span style="color:var(--primary)">TON</span>
+                </div>
+                <div style="text-align:center; font-size:1.2rem">⬇</div>
+                <div class="exchange-row">
+                    <span id="dep-vix-res" style="font-size:1.2rem; font-weight:bold">0</span>
+                    <span>VIX</span>
+                </div>
+                
+                <hr style="border-color:var(--border); margin:15px 0">
+                
+                <div style="font-size:0.9rem; margin-bottom:5px; color:#94a3b8">۲. ارسال به آدرس زیر:</div>
+                <div class="copy-box" onclick="copyTxt('UQBd3Z2pwooAGJDDzI_xO67ZWskaK5zca4Vjar31KmIoE2Te')">
+                    <span>UQBd3Z...IoE2Te</span> 📋
+                </div>
+                <div style="font-size:0.8rem; margin-top:10px; color:#94a3b8">حتما کامنت (Memo) زیر را وارد کنید:</div>
+                <div class="copy-box" onclick="copyTxt('12345678')">
+                    <span style="font-size:1.1rem">12345678</span> 📋
+                </div>
+                <button class="main-btn btn-green" onclick="showAlert('منتظر تایید تراکنش...')">بررسی واریز</button>
+            </div>
+        </div>
+
+        <div id="view-withdraw" style="display:none">
+            <div class="w-card" style="border-color:var(--red)">
+                <div style="font-size:0.9rem; margin-bottom:5px; color:#94a3b8">تبدیل ویکس به تون:</div>
+                <div class="exchange-row">
+                    <input type="number" id="wd-vix" class="ex-inp" placeholder="VIX" oninput="calcExchange('sell')">
+                    <span>VIX</span>
+                </div>
+                <div style="text-align:center; font-size:1.2rem">⬇</div>
+                <div class="exchange-row">
+                    <span id="wd-ton-res" style="font-size:1.2rem; font-weight:bold">0</span>
+                    <span>TON</span>
+                </div>
+                
+                <div style="margin-top:15px; font-size:0.9rem;">آدرس ولت تون:</div>
+                <input type="text" placeholder="آدرس ولت خود را وارد کنید" style="width:100%; padding:12px; background:#0f172a; border:1px solid var(--border); border-radius:8px; color:white; margin-top:5px">
+                
+                <button class="main-btn btn-yellow" style="background:var(--red); color:white" onclick="showAlert('درخواست برداشت ثبت شد')">ثبت درخواست</button>
+                <div style="font-size:0.75rem; color:#94a3b8; margin-top:10px; text-align:center">حداقل برداشت: ۲۰۰۰ ویکس</div>
+            </div>
+        </div>
+
+        <div id="view-vault" style="display:none">
+            <div class="w-card" style="text-align:center; background:linear-gradient(45deg, #1e293b, #0f172a)">
+                <div style="font-size:3rem">🏦</div>
+                <div style="font-size:1.5rem; color:var(--yellow); font-weight:bold">0 VIX</div>
+                <div style="color:#94a3b8; font-size:0.9rem">موجودی صندوق</div>
+                <div style="background:rgba(16, 185, 129, 0.1); color:var(--green); padding:5px; border-radius:5px; margin:10px 0; font-size:0.9rem">سود روزانه: ۰.۰۵٪</div>
+                
+                <input type="number" placeholder="مقدار" style="width:100%; padding:10px; background:#0f172a; border:1px solid var(--border); color:white; border-radius:8px; margin-bottom:10px; text-align:center">
+                <div style="display:flex; gap:10px">
+                    <button class="main-btn btn-green" style="font-size:1rem; padding:10px" onclick="showAlert('واریز به صندوق انجام شد')">واریز</button>
+                    <button class="main-btn btn-yellow" style="font-size:1rem; padding:10px" onclick="showAlert('برداشت از صندوق انجام شد')">برداشت</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div id="tab-chat" class="tab-content">
         <div class="chat-container" id="chat-box">
-            <div class="rain-alert" onclick="claimRain()">
-                🌧️ <b>باران ویکس!</b><br>
-                برای دریافت 50 ویکس کلیک کنید
             </div>
-            </div>
-        <div class="chat-input-area">
-            <input id="chat-in" style="flex:1; background:#334155; border:none; padding:10px; border-radius:8px; color:white;" placeholder="پیام شما...">
+        <div style="padding:10px; display:flex; gap:10px; background:var(--bg-card)">
+            <input id="chat-in" style="flex:1; background:#334155; border:none; padding:10px; border-radius:8px; color:white;" placeholder="پیام...">
             <button onclick="sendChat()" style="background:var(--primary); border:none; padding:0 15px; border-radius:8px; color:white;">➤</button>
         </div>
     </div>
 
     <div id="tab-missions" class="tab-content">
-        <div style="padding:15px; text-align:center;">
-            <h3 style="margin:0; color:var(--green)">ماموریت پامپ 🚀</h3>
-            <p style="font-size:0.8rem; color:#94a3b8">برای شروع رایگان ویکس جمع کنید</p>
-        </div>
         <div class="mission-grid">
             <div class="mission-card" onclick="doTask(this, 100)">
-                <div class="check-mark">✓</div>
-                <div class="mission-icon">📸</div>
+                <div style="font-size:2rem">📸</div>
                 <div>اینستاگرام</div>
-                <div class="mission-reward">🎫 100 VIX</div>
+                <div style="background:rgba(0,0,0,0.3); padding:5px; border-radius:5px; margin-top:5px">100 VIX</div>
             </div>
-            <div class="mission-card" onclick="doTask(this, 50)">
-                <div class="check-mark">✓</div>
-                <div class="mission-icon">✈️</div>
-                <div>تلگرام</div>
-                <div class="mission-reward">🎫 50 VIX</div>
             </div>
-            <div class="mission-card" onclick="doTask(this, 20)">
-                <div class="check-mark">✓</div>
-                <div class="mission-icon">📅</div>
-                <div>ورود روزانه</div>
-                <div class="mission-reward">🎫 20 VIX</div>
-            </div>
-            <div class="mission-card" onclick="doTask(this, 200)">
-                <div class="check-mark">✓</div>
-                <div class="mission-icon">🛍️</div>
-                <div>خرید از اسنپ</div>
-                <div class="mission-reward">🎫 200 VIX</div>
-            </div>
-        </div>
     </div>
 
     <div id="tab-leader" class="tab-content">
-        <div class="lb-tabs">
-            <button class="lb-tab active">این هفته</button>
-            <button class="lb-tab">کل تاریخچه</button>
-        </div>
-        <div class="lb-list">
-            <div class="lb-item">
-                <div style="display:flex; gap:10px; align-items:center;">
-                    <div class="rank-badge rank-1">1</div>
-                    <div>Ali.Reza</div>
-                </div>
-                <div style="color:var(--green)">+54,000 VIX</div>
-            </div>
-            <div class="lb-item">
-                <div style="display:flex; gap:10px; align-items:center;">
-                    <div class="rank-badge">2</div>
-                    <div>Sara_M</div>
-                </div>
-                <div style="color:var(--green)">+32,000 VIX</div>
-            </div>
-            </div>
-    </div>
-
-    <div id="tab-wallet" class="tab-content">
-        <div style="background:#1e1b4b; margin:10px; border-radius:15px; padding:15px; text-align:center;">
-            <h3 style="margin:0; color:var(--yellow)">گردونه شانس 🎰</h3>
-            <p style="font-size:0.8rem; color:#cbd5e1">هزینه هر چرخش: 500 VIX</p>
-            <div class="wheel-container">
-                <div style="position:relative">
-                    <div class="wheel-arrow">⬇</div>
-                    <div class="wheel-outer" id="wheel"></div>
-                </div>
-                <button class="spin-btn" onclick="spinWheel()">بچرخون!</button>
-            </div>
-        </div>
-
-        <div style="padding:15px;">
-            <h3 style="border-bottom:1px solid var(--border); padding-bottom:10px;">فروشگاه همکاران</h3>
-            <div class="mission-grid" style="padding:0">
-                <div class="mission-card" style="background:#252525; height:auto; padding:10px;">
-                    <div style="font-size:1.5rem">🚕</div>
-                    <div>کد تخفیف تپسی</div>
-                    <div class="mission-reward" style="background:var(--yellow); color:black">2000 VIX</div>
-                </div>
-                <div class="mission-card" style="background:#252525; height:auto; padding:10px;">
-                    <div style="font-size:1.5rem">🍕</div>
-                    <div>کد اسنپ فود</div>
-                    <div class="mission-reward" style="background:var(--yellow); color:black">5000 VIX</div>
-                </div>
-            </div>
+        <div class="lb-item">
+            <div>🥇 Ali</div>
+            <div style="color:var(--green)">+50,000</div>
         </div>
     </div>
 
@@ -257,234 +227,139 @@
         <button class="nav-item active" onclick="switchTab('game', this)"><span>🎮</span>بازی</button>
         <button class="nav-item" onclick="switchTab('chat', this)"><span>💬</span>چت</button>
         <button class="nav-item" onclick="switchTab('missions', this)"><span>📋</span>ماموریت</button>
-        <button class="nav-item" onclick="switchTab('leader', this)"><span>🏆</span>برترین</button>
         <button class="nav-item" onclick="switchTab('wallet', this)"><span>💎</span>والت</button>
+        <button class="nav-item" onclick="switchTab('leader', this)"><span>🏆</span>برترین</button>
     </div>
 
 <script>
-    // --- Config ---
-    const tg = window.Telegram.WebApp;
-    tg.expand();
-    let user = tg.initDataUnsafe?.user || { first_name: 'Guest', id: 0 };
+    // --- Config & State ---
+    const tg = window.Telegram.WebApp; tg.expand();
+    const VIX_FIXED_PRICE = 0.015;
+    let TON_LIVE_PRICE = 6.5; 
+    let balance = 5000;
+    let user = tg.initDataUnsafe?.user || { first_name: 'Guest' };
     document.getElementById('u-name').innerText = user.first_name;
 
-    let balance = 5000;
-    
-    // --- Tabs Logic ---
-    function switchTab(tabId, btn) {
-        // Hide all tabs
-        document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-        // Show target
-        document.getElementById('tab-' + tabId).classList.add('active');
+    // --- Wallet Logic (RESTORED) ---
+    async function fetchPrice() {
+        try {
+            const res = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=the-open-network&vs_currencies=usd');
+            const data = await res.json();
+            if(data['the-open-network']) {
+                TON_LIVE_PRICE = data['the-open-network'].usd;
+            }
+        } catch(e) {} // Fail silently, use default
+        updateWalletUI();
+    }
+
+    function updateWalletUI() {
+        const rate = Math.floor(TON_LIVE_PRICE / VIX_FIXED_PRICE);
+        document.getElementById('price-status').innerHTML = `نرخ لحظه‌ای: <b>1 TON = ${rate} VIX</b> ($${TON_LIVE_PRICE})`;
+    }
+
+    function calcExchange(mode) {
+        if(mode === 'buy') {
+            const ton = parseFloat(document.getElementById('dep-ton').value) || 0;
+            const vix = (ton * TON_LIVE_PRICE) / VIX_FIXED_PRICE;
+            document.getElementById('dep-vix-res').innerText = Math.floor(vix).toLocaleString();
+        } else {
+            const vix = parseFloat(document.getElementById('wd-vix').value) || 0;
+            const ton = (vix * VIX_FIXED_PRICE) / TON_LIVE_PRICE;
+            document.getElementById('wd-ton-res').innerText = ton.toFixed(4);
+        }
+    }
+
+    function setWTab(tab, btn) {
+        document.getElementById('view-deposit').style.display = 'none';
+        document.getElementById('view-withdraw').style.display = 'none';
+        document.getElementById('view-vault').style.display = 'none';
         
-        // Update nav
+        document.getElementById('view-' + tab).style.display = 'block';
+        
+        document.querySelectorAll('.w-tab').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        playSnd('snd-click');
+    }
+
+    function copyTxt(txt) {
+        navigator.clipboard.writeText(txt);
+        showAlert('کپی شد!');
+    }
+
+    // --- Core Logic (Tabs & UI) ---
+    function switchTab(id, btn) {
+        document.querySelectorAll('.tab-content').forEach(e => e.classList.remove('active'));
+        document.getElementById('tab-' + id).classList.add('active');
         if(btn) {
-            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(e => e.classList.remove('active'));
             btn.classList.add('active');
         }
         playSnd('snd-click');
-        resize(); // Fix canvas if game tab
+        if(id === 'game') resize();
+        if(id === 'wallet') fetchPrice(); // Fetch price when opening wallet
     }
-
-    // --- Utils ---
+    
     function updateUI() { document.getElementById('ui-bal').innerText = balance.toLocaleString(); }
-    function playSnd(id) { try{const a=document.getElementById(id); a.currentTime=0; a.play().catch(()=>{});}catch(e){} }
-    function showAlert(msg) {
-        const box = document.getElementById('alert');
-        box.innerText = msg; box.style.display='block';
-        setTimeout(()=>box.style.display='none', 2000);
+    function showAlert(msg) { 
+        const b=document.getElementById('alert'); b.innerText=msg; b.style.display='block'; 
+        setTimeout(()=>b.style.display='none', 2000); 
     }
+    function playSnd(id) { try{document.getElementById(id).currentTime=0;document.getElementById(id).play().catch(()=>{});}catch(e){} }
 
-    // --- GAME LOGIC (Vix Crash - Preserved) ---
+    // --- GAME ENGINE (Vix Crash) ---
     const cvs = document.getElementById('gameCanvas');
     const ctx = cvs.getContext('2d');
-    const elGame = {
-        multi: document.getElementById('multi-disp'),
-        status: document.getElementById('status-txt'),
-        btn: document.getElementById('main-btn'),
-        bet: document.getElementById('bet-in'),
-        auto: document.getElementById('auto-in')
-    };
-
+    const elGame = { multi:document.getElementById('multi-disp'), status:document.getElementById('status-txt'), btn:document.getElementById('main-btn'), bet:document.getElementById('bet-in'), auto:document.getElementById('auto-in') };
     let inGame=false, nextBet=0, currentMult=1.00;
 
-    function resize() { 
-        if(cvs.parentElement) {
-            cvs.width = cvs.parentElement.offsetWidth; 
-            cvs.height = cvs.parentElement.offsetHeight; 
-        }
-    }
-    window.onresize = resize;
+    function resize() { if(cvs.parentElement){cvs.width=cvs.parentElement.offsetWidth; cvs.height=cvs.parentElement.offsetHeight;} }
+    window.onresize=resize;
 
     function gameLoop() {
-        let cd = 5;
-        elGame.status.style.display = 'block';
-        elGame.multi.style.display = 'none';
-        updateBtnState('idle');
-
-        let t = setInterval(()=>{
-            elGame.status.innerText = `راند بعدی: ${cd}`;
-            cd--;
-            if(cd<0) { clearInterval(t); startFly(); }
-        },1000);
+        let cd=5; elGame.status.style.display='block'; elGame.multi.style.display='none'; updateBtn('idle');
+        let t=setInterval(()=>{ elGame.status.innerText=`راند بعدی: ${cd}`; cd--; if(cd<0){clearInterval(t); startFly();} },1000);
     }
-
     function startFly() {
-        playSnd('snd-start');
-        elGame.status.style.display='none';
-        elGame.multi.style.display='block';
+        playSnd('snd-start'); elGame.status.style.display='none'; elGame.multi.style.display='block';
+        let crash=(Math.random()*5+1).toFixed(2); if(Math.random()<0.2)crash=1.00;
+        let myBetAmt=0, myAuto=0, amIn=false, startTime=Date.now();
         
-        let crash = (Math.random()*5+1).toFixed(2);
-        if(Math.random()<0.2) crash=1.00;
-
-        let flying=true, startTime=Date.now();
-        let myBetAmt=0, myAuto=0, amIn=false;
-
         if(nextBet>0) {
-            if(nextBet>balance) { showAlert('موجودی ناکافی'); nextBet=0; }
-            else {
-                balance-=nextBet; myBetAmt=nextBet; myAuto=parseFloat(elGame.auto.value)||0;
-                amIn=true; nextBet=0; updateUI();
-            }
+            if(nextBet>balance) showAlert('موجودی ناکافی');
+            else { balance-=nextBet; myBetAmt=nextBet; myAuto=parseFloat(elGame.auto.value)||0; amIn=true; nextBet=0; updateUI(); }
         }
-        updateBtnState(amIn?'cashout':'wait');
+        updateBtn(amIn?'cashout':'wait');
 
-        let interval = setInterval(()=>{
-            let t = (Date.now()-startTime)/1000;
-            currentMult = Math.pow(Math.E, 0.12*t).toFixed(2);
-
-            if(amIn && myAuto>1 && currentMult>=myAuto) {
-                cashOut(myBetAmt, myAuto); amIn=false;
+        let int=setInterval(()=>{
+            let t=(Date.now()-startTime)/1000; currentMult=Math.pow(Math.E, 0.12*t).toFixed(2);
+            if(amIn && myAuto>1 && currentMult>=myAuto) { cashOut(myBetAmt,myAuto); amIn=false; }
+            if(currentMult>=crash) { clearInterval(int); doCrash(crash, amIn); }
+            else { 
+                elGame.multi.innerText=currentMult+'x'; 
+                if(amIn) { elGame.btn.innerText=`برداشت (${Math.floor(myBetAmt*currentMult)})`; elGame.btn.onclick=()=>{cashOut(myBetAmt,currentMult); amIn=false; elGame.btn.onclick=null;} }
+                draw(currentMult,false);
             }
-
-            if(currentMult>=crash) {
-                clearInterval(interval);
-                doCrash(crash, amIn);
-            } else {
-                elGame.multi.innerText = currentMult+'x';
-                if(amIn) {
-                    elGame.btn.innerText = `برداشت (${Math.floor(myBetAmt*currentMult)})`;
-                    elGame.btn.onclick = ()=>{ cashOut(myBetAmt, currentMult); amIn=false; elGame.btn.onclick=null; };
-                }
-                draw(currentMult, false);
-            }
-        }, 30);
+        },30);
     }
-
-    function cashOut(amt, mult) {
-        playSnd('snd-win');
-        let win = Math.floor(amt*mult);
-        balance+=win; updateUI();
-        updateBtnState('won', win);
+    function cashOut(a,m) { playSnd('snd-win'); let w=Math.floor(a*m); balance+=w; updateUI(); updateBtn('won',w); }
+    function doCrash(v) { playSnd('snd-crash'); elGame.multi.style.color='#ef4444'; elGame.multi.innerText=v+'x'; elGame.status.innerText='منفجر شد!'; elGame.status.style.display='block'; draw(v,true); updateBtn('crashed'); setTimeout(()=>{elGame.multi.style.color='white'; gameLoop();},3000); }
+    function updateBtn(s,v) {
+        const b=elGame.btn; b.onclick=null;
+        if(s==='idle'){ if(nextBet>0){b.className='main-btn btn-yellow';b.innerText='لغو شرط';b.onclick=()=>{nextBet=0;updateBtn('idle');}} else{b.className='main-btn btn-green';b.innerText='شرط بندی';b.disabled=false;b.onclick=()=>{let v=parseInt(elGame.bet.value);if(v<=balance&&v>=10){nextBet=v;updateBtn('idle');}}} }
+        else if(s==='wait'){b.className='main-btn btn-disabled';b.innerText='بازی در جریان...';b.disabled=true;}
+        else if(s==='cashout'){b.className='main-btn btn-yellow';}
+        else if(s==='won'){b.className='main-btn btn-green';b.innerText=`بردی: ${v}`;b.disabled=true;}
+        else{b.className='main-btn btn-disabled';b.innerText='صبر کنید...';b.disabled=true;}
     }
+    function draw(v,c) { ctx.clearRect(0,0,cvs.width,cvs.height); let p=Math.min((v-1)/5,1); let x=p*(cvs.width-50); let y=cvs.height-(p*(cvs.height-100))-30; ctx.beginPath();ctx.lineWidth=4;ctx.strokeStyle=c?'#ef4444':'#22c55e';ctx.moveTo(0,cvs.height);ctx.quadraticCurveTo(x/2,cvs.height,x,y);ctx.stroke();ctx.beginPath();ctx.fillStyle='white';ctx.arc(x,y,6,0,Math.PI*2);ctx.fill(); }
+    window.setBet=(p)=>{playSnd('snd-click'); elGame.bet.value=Math.floor(balance*p);}
 
-    function doCrash(val) {
-        playSnd('snd-crash');
-        elGame.multi.style.color='#ef4444'; elGame.multi.innerText=val+'x';
-        elGame.status.innerText='منفجر شد!'; elGame.status.style.display='block';
-        draw(val, true);
-        updateBtnState('crashed');
-        setTimeout(()=>{
-            elGame.multi.style.color='white';
-            gameLoop();
-        }, 3000);
-    }
-
-    function updateBtnState(s, val) {
-        const b = elGame.btn; b.onclick=null;
-        if(s==='idle') {
-            if(nextBet>0) { b.className='main-btn btn-yellow'; b.innerText='لغو شرط'; b.onclick=()=>{nextBet=0; updateBtnState('idle');} }
-            else { b.className='main-btn btn-green'; b.innerText='شرط بندی'; b.disabled=false; b.onclick=()=>{
-                let v=parseInt(elGame.bet.value);
-                if(v<=balance && v>=10) { nextBet=v; updateBtnState('idle'); }
-            }}
-        }
-        else if(s==='wait') { b.className='main-btn btn-disabled'; b.innerText='بازی در جریان...'; b.disabled=true; }
-        else if(s==='cashout') { b.className='main-btn btn-yellow'; } // Text handled in loop
-        else if(s==='won') { b.className='main-btn btn-green'; b.innerText=`بردی: ${val}`; b.disabled=true; }
-        else { b.className='main-btn btn-disabled'; b.innerText='صبر کنید...'; b.disabled=true; }
-    }
-
-    function draw(val, crashed) {
-        ctx.clearRect(0,0,cvs.width,cvs.height);
-        let p = Math.min((val-1)/5, 1);
-        let x = p*(cvs.width-50);
-        let y = cvs.height - (p*(cvs.height-100)) - 30;
-        ctx.beginPath(); ctx.lineWidth=4; ctx.strokeStyle=crashed?'#ef4444':'#22c55e';
-        ctx.moveTo(0,cvs.height); ctx.quadraticCurveTo(x/2,cvs.height,x,y); ctx.stroke();
-        ctx.beginPath(); ctx.fillStyle='white'; ctx.arc(x,y,6,0,Math.PI*2); ctx.fill();
-    }
-
-    window.setBet = (pct) => { playSnd('snd-click'); elGame.bet.value = Math.floor(balance*pct); };
-
-    // --- CHAT & RAIN ---
-    function sendChat() {
-        const inp = document.getElementById('chat-in');
-        if(!inp.value) return;
-        const box = document.getElementById('chat-box');
-        const div = document.createElement('div');
-        div.className = 'chat-msg';
-        div.innerHTML = `<span class="chat-user">${user.first_name}</span>: ${inp.value}`;
-        box.appendChild(div);
-        inp.value = '';
-        box.scrollTop = box.scrollHeight;
-    }
-    // Simulation of others
-    setInterval(()=>{
-        const msgs = ["سود کردم!", "ضریب بعدی چنده؟", "پامپ نزدیکه", "ویکس بخر", "عالی بود"];
-        const names = ["Mamad", "Sina", "Ghost", "Trader101"];
-        const box = document.getElementById('chat-box');
-        const div = document.createElement('div');
-        div.className = 'chat-msg';
-        div.innerHTML = `<span class="chat-user" style="color:#94a3b8">${names[Math.floor(Math.random()*names.length)]}</span>: ${msgs[Math.floor(Math.random()*msgs.length)]}`;
-        box.appendChild(div);
-        box.scrollTop = box.scrollHeight;
-    }, 5000);
-
-    function claimRain() {
-        playSnd('snd-win');
-        balance+=50; updateUI();
-        showAlert("50 ویکس باران دریافت شد!");
-        document.querySelector('.rain-alert').style.display='none';
-    }
-
-    // --- MISSIONS ---
-    function doTask(card, reward) {
-        if(card.classList.contains('card-completed')) return;
-        // In real app, check API via Telegram
-        // tg.openLink('https://instagram.com/...');
-        
-        // Simulating completion
-        setTimeout(()=>{
-            playSnd('snd-win');
-            balance+=reward; updateUI();
-            card.classList.add('card-completed');
-            showAlert(`${reward} ویکس دریافت شد!`);
-        }, 1000);
-    }
-
-    // --- LOTTERY ---
-    function spinWheel() {
-        if(balance < 500) return showAlert("نیاز به 500 ویکس دارید");
-        balance -= 500; updateUI();
-        
-        const wheel = document.getElementById('wheel');
-        const deg = 1000 + Math.random()*3000; // Random spin
-        playSnd('snd-spin'); // Make sure to add a sound file or remove this line
-        
-        wheel.style.transform = `rotate(${deg}deg)`;
-        
-        setTimeout(()=>{
-            showAlert("تبریک! شما برنده شدید (دمو)");
-            // Logic to determine prize based on angle
-        }, 4000);
-    }
+    // --- Chat & Missions ---
+    function sendChat(){ const i=document.getElementById('chat-in'); if(i.value){ const d=document.createElement('div'); d.className='chat-msg'; d.innerHTML=`<b>${user.first_name}</b>: ${i.value}`; document.getElementById('chat-box').appendChild(d); i.value=''; } }
+    function doTask(c,r){ if(!c.classList.contains('done')){ playSnd('snd-win'); balance+=r; updateUI(); c.classList.add('done'); showAlert(r+' ویکس دریافت شد'); } }
 
     // Init
-    resize();
-    updateUI();
-    gameLoop();
-
+    resize(); updateUI(); fetchPrice(); gameLoop(); setInterval(fetchPrice, 60000);
 </script>
 </body>
 </html>

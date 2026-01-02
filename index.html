@@ -11,20 +11,17 @@
         :root {
             --bg-dark: #0f172a; --bg-card: #1e293b; --primary: #0088cc;
             --green: #22c55e; --red: #ef4444; --yellow: #f59e0b;
-            --text: #f1f5f9; --border: #334155; --blue-card: #1d4ed8;
+            --text: #f1f5f9; --border: #334155;
         }
         * { box-sizing: border-box; outline: none; -webkit-tap-highlight-color: transparent; font-family: 'Vazirmatn', sans-serif !important; }
         body { background-color: var(--bg-dark); color: var(--text); margin: 0; height: 100vh; display: flex; flex-direction: column; overflow: hidden; user-select: none; }
 
-        /* --- Header (Fixed Layout) --- */
+        /* HEADER */
         .header { 
             padding: 0 15px; background: var(--bg-card); display: flex; justify-content: space-between; align-items: center; 
             border-bottom: 1px solid var(--border); height: 60px; z-index: 50; flex-shrink: 0;
         }
-        /* Right Side: Brand */
         .header-brand { font-weight: 900; font-size: 1.2rem; color: var(--yellow); letter-spacing: 1px; display: flex; align-items: center; gap: 5px; }
-        
-        /* Left Side: Profile */
         .header-profile { 
             background: rgba(255,255,255,0.1); padding: 5px 10px; border-radius: 20px; 
             display: flex; align-items: center; gap: 8px; cursor: pointer; border: 1px solid var(--border);
@@ -32,17 +29,18 @@
         .hp-avatar { width: 28px; height: 28px; background: var(--primary); border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 0.8rem; }
         .hp-balance { font-size: 0.9rem; font-weight: bold; color: white; }
 
-        /* Audio Panel (Floating Right) */
+        /* AUDIO BUTTONS (Floating Right) */
         .audio-panel { position: fixed; top: 70px; right: 10px; z-index: 90; display: flex; flex-direction: column; gap: 10px; }
-        .audio-btn { width: 35px; height: 35px; background: rgba(0,0,0,0.6); border: 1px solid var(--border); border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; color: white; font-size: 1rem; backdrop-filter: blur(4px); }
+        .audio-btn { width: 35px; height: 35px; background: rgba(0,0,0,0.6); border: 1px solid var(--border); border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; color: white; font-size: 1rem; backdrop-filter: blur(4px); transition: 0.2s; }
+        .audio-btn:active { transform: scale(0.9); }
         .audio-btn.off { opacity: 0.5; color: #ef4444; border-color: #ef4444; }
 
-        /* Main Content Area */
+        /* TABS AREA */
         .content-area { flex: 1; overflow-y: auto; position: relative; }
         .tab-content { display: none; padding-bottom: 20px; }
         .tab-content.active { display: block; }
 
-        /* --- GAME UI --- */
+        /* GAME STYLES */
         .stage { height: 250px; position: relative; background: radial-gradient(circle at center, #334155 0%, #0f172a 80%); display: flex; justify-content: center; align-items: center; overflow: hidden; border-bottom: 1px solid var(--border); }
         canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
         .center-info { position: absolute; text-align: center; z-index: 10; pointer-events: none; }
@@ -53,7 +51,6 @@
         .input-box { background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; height: 50px; display: flex; padding: 0 10px; align-items: center; }
         .input-box input { background: transparent; border: none; color: white; width: 100%; text-align: center; font-size: 1.2rem; font-weight: bold; }
         .label { font-size: 0.75rem; color: #94a3b8; margin-bottom: 5px; display: block; }
-        
         .quick-row { display: flex; gap: 5px; margin-bottom: 15px; }
         .quick-btn { flex: 1; background: var(--bg-card); color: #cbd5e1; border: 1px solid var(--border); border-radius: 6px; padding: 8px 0; font-size: 0.8rem; cursor: pointer; }
         .main-btn { width: 100%; padding: 15px; border-radius: 12px; font-size: 1.2rem; font-weight: 800; border: none; cursor: pointer; transition: 0.1s; }
@@ -62,17 +59,15 @@
         .btn-yellow { background: var(--yellow); color: #451a03; box-shadow: 0 4px 0 #b45309; }
         .btn-disabled { background: #334155; color: #94a3b8; cursor: not-allowed; }
 
-        /* --- WALLET & PROFILE UI --- */
+        /* WALLET & PROFILE */
         .card { background: var(--bg-card); margin: 15px; padding: 20px; border-radius: 15px; border: 1px solid var(--border); text-align: center; }
         .w-tabs { display: flex; justify-content: center; gap: 10px; margin: 15px; }
         .w-tab { padding: 8px 15px; border: 1px solid var(--border); border-radius: 8px; background: transparent; color: #94a3b8; cursor: pointer; }
         .w-tab.active { background: var(--primary); color: white; border-color: var(--primary); }
-        
         .ex-row { display: flex; justify-content: space-between; align-items: center; background: #0f172a; padding: 10px; border-radius: 10px; border: 1px solid var(--border); margin: 10px 0; }
         .copy-box { background: #0f172a; padding: 12px; border-radius: 8px; font-family: monospace; border: 1px dashed var(--border); display: flex; justify-content: space-between; align-items: center; margin: 10px 0; font-size: 0.9rem; color: var(--yellow); cursor: pointer; }
 
-        /* --- VAULT (STAKING) UI --- */
-        .stake-list { margin-top: 20px; }
+        /* STAKING */
         .stake-item { background: #0f172a; border: 1px solid var(--border); border-radius: 10px; padding: 15px; margin-bottom: 10px; text-align: right; position: relative; }
         .stake-header { display: flex; justify-content: space-between; font-size: 0.9rem; margin-bottom: 5px; }
         .stake-time { font-size: 0.8rem; color: #94a3b8; }
@@ -80,26 +75,32 @@
         .btn-claim { background: var(--green); border: none; color: white; padding: 5px 15px; border-radius: 5px; font-size: 0.8rem; margin-top: 10px; cursor: pointer; }
         .btn-claim:disabled { background: #334155; cursor: not-allowed; opacity: 0.5; }
 
-        /* --- PROFILE UI --- */
-        .profile-header { text-align: center; padding: 20px; }
+        /* PROFILE */
         .p-stat-row { display: flex; justify-content: space-between; padding: 10px; border-bottom: 1px solid var(--border); font-size: 0.9rem; }
         .p-stat-val { font-weight: bold; color: var(--primary); }
 
-        /* --- NAV BAR --- */
+        /* WHEEL */
+        .wheel-container { display: flex; flex-direction: column; align-items: center; padding: 20px; }
+        .wheel-wrap { position: relative; width: 280px; height: 280px; }
+        .wheel-outer { width: 100%; height: 100%; border-radius: 50%; border: 5px solid var(--yellow); position: relative; overflow: hidden; transition: transform 4s cubic-bezier(0.1, 0.7, 0.1, 1); 
+            background: conic-gradient(#ef4444 0deg 51.4deg, #3b82f6 51.4deg 102.8deg, #22c55e 102.8deg 154.2deg, #a855f7 154.2deg 205.6deg, #f97316 205.6deg 257deg, #eab308 257deg 308.4deg, #64748b 308.4deg 360deg); 
+            box-shadow: 0 0 20px rgba(245, 158, 11, 0.3); }
+        .wheel-text { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; }
+        .wheel-num { position: absolute; top: 50%; left: 50%; transform-origin: 0 0; font-weight: bold; font-size: 1.1rem; color: white; text-shadow: 1px 1px 2px black; width: 120px; text-align: right; padding-right: 15px; margin-top: -10px;}
+        .wn-1 { transform: rotate(25deg); } .wn-2 { transform: rotate(77deg); } .wn-3 { transform: rotate(128deg); } .wn-4 { transform: rotate(180deg); } .wn-5 { transform: rotate(231deg); } .wn-6 { transform: rotate(282deg); } .wn-7 { transform: rotate(334deg); }
+        .wheel-arrow { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); font-size: 2rem; z-index: 10; text-shadow: 0 2px 2px black; color: white;}
+
+        /* NAV */
         .nav-bar { display: flex; background: #1e293b; padding: 8px 0; border-top: 1px solid var(--border); justify-content: space-around; z-index: 50; flex-shrink: 0; }
         .nav-item { background: none; border: none; color: #64748b; display: flex; flex-direction: column; align-items: center; font-size: 0.7rem; gap: 4px; cursor: pointer; }
         .nav-item.active { color: var(--primary); }
         .nav-item span { font-size: 1.4rem; }
-
-        /* Chat, Wheel, Missions (Simplified for space) */
-        .chat-box { height: 300px; overflow-y: auto; padding: 10px; }
-        .chat-msg { background: rgba(255,255,255,0.05); padding: 5px 10px; border-radius: 8px; margin-bottom: 5px; font-size: 0.85rem; }
-        
         .alert-box { position: fixed; top: 70px; left: 50%; transform: translateX(-50%); background: var(--green); padding: 10px 20px; border-radius: 20px; z-index: 200; display: none; color: #022c22; font-weight: bold; box-shadow: 0 5px 15px rgba(0,0,0,0.5); }
     </style>
 </head>
 <body>
 
+    <audio id="snd-bg" src="bg.mp3" loop></audio>
     <audio id="snd-click" src="click.mp3"></audio>
     <audio id="snd-win" src="win.mp3"></audio>
     <audio id="snd-start" src="start.mp3"></audio>
@@ -117,9 +118,7 @@
             <div class="hp-avatar" id="head-avatar">👤</div>
             <div class="hp-balance" id="head-bal">0</div>
         </div>
-        <div class="header-brand">
-            Vix Crash 🚀
-        </div>
+        <div class="header-brand">Vix Crash 🚀</div>
     </div>
 
     <div class="content-area">
@@ -134,14 +133,8 @@
             </div>
             <div class="controls">
                 <div class="control-grid">
-                    <div>
-                        <span class="label">مبلغ شرط (VIX)</span>
-                        <div class="input-box"><input type="number" id="bet-in" value="100"></div>
-                    </div>
-                    <div>
-                        <span class="label">خروج اتومات (X)</span>
-                        <div class="input-box"><input type="number" id="auto-in" placeholder="2.00"></div>
-                    </div>
+                    <div><span class="label">مبلغ شرط</span><div class="input-box"><input type="number" id="bet-in" value="100"></div></div>
+                    <div><span class="label">خروج اتومات</span><div class="input-box"><input type="number" id="auto-in" placeholder="2.00"></div></div>
                 </div>
                 <div class="quick-row">
                     <button class="quick-btn" onclick="setBet(0.1)">10%</button>
@@ -162,7 +155,7 @@
 
             <div id="sec-deposit">
                 <div class="card">
-                    <div style="color:var(--green); margin-bottom:10px" id="price-tag">1 TON = ... VIX</div>
+                    <div style="color:var(--green); margin-bottom:10px" id="price-tag">دریافت نرخ...</div>
                     <div class="ex-row">
                         <input type="number" id="dep-ton" placeholder="TON" style="background:transparent;border:none;color:white;width:100px;font-size:1.2rem" oninput="calcEx('buy')">
                         <span>TON</span>
@@ -173,15 +166,12 @@
                         <span>VIX</span>
                     </div>
                     <hr style="border-color:var(--border); margin:15px 0">
-                    <div style="font-size:0.8rem; color:#94a3b8">آدرس والت شما (فرستنده):</div>
-                    <input type="text" id="sender-w" placeholder="آدرس ولت خود را وارد کنید" style="width:100%; padding:10px; background:#0f172a; border:1px solid var(--border); color:white; border-radius:8px; margin-bottom:10px; text-align:center">
-                    
+                    <div style="font-size:0.8rem; color:#94a3b8">آدرس والت شما (جهت پیگیری):</div>
+                    <input type="text" id="sender-w" placeholder="آدرس والت خود را وارد کنید" style="width:100%; padding:10px; background:#0f172a; border:1px solid var(--border); color:white; border-radius:8px; margin-bottom:10px; text-align:center; font-size:0.8rem">
                     <div style="font-size:0.8rem; color:#94a3b8">ارسال به:</div>
                     <div class="copy-box" onclick="copy('UQBSKUvXVMk96OM1UuwDFejNR62HVC9udRUNL1Xk1qsvUutO')">UQBSKU...vUutO 📋</div>
-                    
                     <div style="font-size:0.8rem; color:var(--red)">ممو (Memo) الزامی:</div>
                     <div class="copy-box" onclick="copy(user.id)"><span id="user-memo-dep">...</span> 📋</div>
-                    
                     <button class="main-btn btn-green" onclick="showAlert('درخواست ثبت شد')">بررسی تراکنش</button>
                 </div>
             </div>
@@ -205,7 +195,7 @@
             <div id="sec-vault" style="display:none">
                 <div class="card" style="background:linear-gradient(45deg, #1e293b, #0f172a)">
                     <div style="font-size:2.5rem">🏦</div>
-                    <div style="color:#94a3b8; font-size:0.9rem">سرمایه‌گذاری در صندوق</div>
+                    <div style="color:#94a3b8; font-size:0.9rem">سرمایه‌گذاری</div>
                     
                     <div style="text-align:left; margin-top:15px; font-size:0.8rem">پلن:</div>
                     <select id="stake-plan" style="width:100%; padding:10px; background:#0f172a; color:white; border:1px solid var(--border); border-radius:8px; margin-bottom:10px">
@@ -216,13 +206,18 @@
                     <div style="text-align:left; font-size:0.8rem">مبلغ:</div>
                     <input id="stake-amt" type="number" placeholder="0" style="width:100%; padding:10px; background:#0f172a; color:white; border:1px solid var(--border); border-radius:8px; text-align:center">
                     
+                    <div class="quick-row" style="margin-top:5px">
+                        <button class="quick-btn" onclick="setStakePct(0.25)">25%</button>
+                        <button class="quick-btn" onclick="setStakePct(0.5)">50%</button>
+                        <button class="quick-btn" onclick="setStakePct(1.0)">MAX</button>
+                    </div>
+
                     <button class="main-btn btn-green" style="margin-top:10px; font-size:1rem" onclick="createStake()">استیک کردن (قفل)</button>
                 </div>
 
                 <div style="padding:0 15px">
                     <h4 style="margin-bottom:5px">استیک‌های فعال من:</h4>
-                    <div id="stakes-list">
-                        </div>
+                    <div id="stakes-list"></div>
                 </div>
             </div>
         </div>
@@ -233,66 +228,92 @@
                 <h3 id="p-name">Guest</h3>
                 <div style="color:#94a3b8; font-size:0.9rem">ID: <span id="p-id">...</span></div>
             </div>
-
             <div style="padding:0 15px">
-                <div class="p-stat-row">
-                    <span>موجودی کیف پول</span>
-                    <span class="p-stat-val" id="p-bal">0 VIX</span>
-                </div>
-                <div class="p-stat-row">
-                    <span>کل واریزی‌ها</span>
-                    <span class="p-stat-val">5,000 VIX</span>
-                </div>
-                <div class="p-stat-row">
-                    <span>کل برداشت‌ها</span>
-                    <span class="p-stat-val">0 VIX</span>
-                </div>
-                
+                <div class="p-stat-row"><span>موجودی کیف پول</span><span class="p-stat-val" id="p-bal">0 VIX</span></div>
+                <div class="p-stat-row"><span>کل واریزی‌ها</span><span class="p-stat-val">0 VIX</span></div>
+                <div class="p-stat-row"><span>کل برداشت‌ها</span><span class="p-stat-val">0 VIX</span></div>
                 <div class="card" style="margin:15px 0; text-align:left">
                     <div style="text-align:center; font-weight:bold; color:var(--yellow); margin-bottom:10px">🤝 همکاری در فروش</div>
-                    <div style="font-size:0.8rem">لینک دعوت شما:</div>
+                    <div style="font-size:0.8rem">لینک دعوت:</div>
                     <div class="copy-box" onclick="copy('https://t.me/VixCrashBot?start='+user.id)">t.me/Bot?start=... 📋</div>
                     <div style="display:flex; justify-content:space-between; margin-top:10px">
-                        <span>زیرمجموعه‌ها: 12</span>
-                        <span style="color:var(--green)">درآمد: 450 VIX</span>
+                        <span>زیرمجموعه‌ها: 0</span>
+                        <span style="color:var(--green)">درآمد: 0 VIX</span>
                     </div>
                 </div>
             </div>
         </div>
 
         <div id="tab-chat" class="tab-content">
-            <div class="chat-box" id="chat-box"></div>
+            <div style="height:350px; overflow-y:auto; padding:10px" id="chat-box"></div>
             <div style="padding:10px; display:flex; gap:10px">
                 <input id="chat-in" style="flex:1; background:#334155; border:none; padding:10px; border-radius:8px; color:white" placeholder="پیام...">
                 <button onclick="sendChat()" style="background:var(--primary); border:none; padding:0 15px; border-radius:8px; color:white">➤</button>
             </div>
         </div>
 
-    </div> <div class="nav-bar">
+        <div id="tab-wheel" class="tab-content">
+            <div style="text-align:center; padding:20px">
+                <h3 style="color:var(--yellow)">گردونه شانس</h3>
+                <div class="wheel-container">
+                    <div class="wheel-wrap">
+                        <div class="wheel-outer" id="wheel">
+                            <div class="wheel-text">
+                                <div class="wheel-num wn-1">0</div>
+                                <div class="wheel-num wn-2">20</div>
+                                <div class="wheel-num wn-3">50</div>
+                                <div class="wheel-num wn-4">100</div>
+                                <div class="wheel-num wn-5">0</div>
+                                <div class="wheel-num wn-6">500</div>
+                                <div class="wheel-num wn-7">100</div>
+                            </div>
+                        </div>
+                        <div class="wheel-arrow">⬇</div>
+                    </div>
+                    <button class="main-btn btn-green" style="margin-top:20px; width:200px" onclick="spinWheel()">بچرخون (100 V)</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="nav-bar">
         <button class="nav-item active" onclick="switchTab('game', this)"><span>🎮</span>بازی</button>
         <button class="nav-item" onclick="switchTab('chat', this)"><span>💬</span>چت</button>
         <button class="nav-item" onclick="switchTab('wallet', this)"><span>💎</span>کیف پول</button>
+        <button class="nav-item" onclick="switchTab('wheel', this)"><span>🎡</span>گردونه</button>
         <button class="nav-item" onclick="switchTab('profile', this)"><span>👤</span>پروفایل</button>
     </div>
 
 <script>
-    // --- STATE ---
+    // --- INIT ---
     const tg = window.Telegram.WebApp; tg.expand();
     const VIX_PRICE = 0.015; let TON_PRICE = 6.5;
     let balance = 5000;
-    
-    // Stakes Data (In real app, this comes from database)
-    // Structure: { id, amount, startTime, durationDays, rate, status: 'locked'|'claimable' }
     let myStakes = [];
-
+    
+    // User Init
     let user = tg.initDataUnsafe?.user || { first_name: 'Guest', id: 123456 };
     
-    // Init User Data
-    document.getElementById('u-name').innerText = user.first_name;
-    document.getElementById('p-name').innerText = user.first_name;
-    document.getElementById('p-id').innerText = user.id;
-    document.getElementById('user-memo-dep').innerText = user.id;
-    updateUI();
+    // Safe DOM Update
+    function initApp() {
+        document.getElementById('p-name').innerText = user.first_name;
+        document.getElementById('p-id').innerText = user.id;
+        document.getElementById('user-memo-dep').innerText = user.id;
+        updateUI();
+        resize();
+        gameLoop();
+        fetchPrice();
+        setInterval(fetchPrice, 60000);
+        
+        // Mock Chat
+        setInterval(()=>{
+            const m=["سود کردم","لایک","عالی","کی پامپ میشه؟"]; const u=["Ali","Reza","Sina"];
+            const d=document.createElement('div'); d.className='chat-msg'; 
+            d.innerHTML=`<span style="color:#94a3b8;font-weight:bold">${u[Math.floor(Math.random()*u.length)]}</span>: ${m[Math.floor(Math.random()*m.length)]}`; 
+            document.getElementById('chat-box').appendChild(d);
+        }, 6000);
+    }
 
     // --- TABS & NAV ---
     function switchTab(t, b) {
@@ -306,7 +327,7 @@
         if(t==='game') resize();
     }
 
-    // --- WALLET LOGIC ---
+    // --- WALLET ---
     function setWSection(s, b) {
         document.getElementById('sec-deposit').style.display='none';
         document.getElementById('sec-withdraw').style.display='none';
@@ -327,84 +348,65 @@
         }
     }
 
-    // --- TRUE VAULT LOGIC (STAKING) ---
+    async function fetchPrice() {
+        try{const r=await fetch('https://api.coingecko.com/api/v3/simple/price?ids=the-open-network&vs_currencies=usd'); const d=await r.json(); if(d['the-open-network'])TON_PRICE=d['the-open-network'].usd; document.getElementById('price-tag').innerText=`1 TON = ${Math.floor(TON_PRICE/VIX_PRICE)} VIX`;}catch(e){}
+    }
+
+    // --- STAKING (VAULT) ---
+    function setStakePct(p) { document.getElementById('stake-amt').value = Math.floor(balance * p); }
+    
     function createStake() {
         const amt = parseInt(document.getElementById('stake-amt').value);
         const days = parseInt(document.getElementById('stake-plan').value);
-        
         if(!amt || amt < 100) return showAlert('حداقل ۱۰۰ ویکس');
         if(amt > balance) return showAlert('موجودی کافی نیست');
 
         balance -= amt;
-        
-        // Create Stake Record
-        const rate = days === 7 ? 0.05 : 0.20; // 5% or 20% total return
+        const rate = days === 7 ? 0.05 : 0.20;
         const newStake = {
             id: Date.now(),
             amount: amt,
             startTime: Date.now(),
-            duration: days * 24 * 60 * 60 * 1000, // ms (For Demo: change 24*... to 10*1000 for 10 sec test)
-            // FOR DEMO: Let's make 7 days = 10 seconds so you can see it unlock!
-            // duration: 10000, 
+            duration: days * 24 * 60 * 60 * 1000, 
             days: days,
-            profit: Math.floor(amt * rate),
-            status: 'locked'
+            profit: Math.floor(amt * rate)
         };
-        
         myStakes.push(newStake);
         updateUI();
         renderStakes();
-        showAlert(`سرمایه‌گذاری ${days} روزه ایجاد شد`);
-        
-        // Auto-refresh UI after "duration" (For demo purposes)
-        // setTimeout(renderStakes, 10500); 
+        showAlert('سرمایه‌گذاری ایجاد شد');
     }
 
     function renderStakes() {
         const list = document.getElementById('stakes-list');
         list.innerHTML = '';
-        
-        if(myStakes.length === 0) {
-            list.innerHTML = '<div style="text-align:center;color:#64748b;font-size:0.8rem">هیچ سرمایه‌گذاری فعالی ندارید</div>';
-            return;
-        }
+        if(myStakes.length === 0) { list.innerHTML = '<div style="text-align:center;color:#64748b;font-size:0.8rem">خالی</div>'; return; }
 
-        myStakes.forEach((s, index) => {
+        myStakes.forEach((s, idx) => {
             const now = Date.now();
             const unlockTime = s.startTime + s.duration;
             const isLocked = now < unlockTime;
-            const timeLeft = isLocked ? Math.ceil((unlockTime - now)/(1000*60*60*24)) + ' روز مانده' : 'آزاد شده';
-            // For Demo: if duration is seconds, show seconds
-            // const timeLeft = isLocked ? Math.ceil((unlockTime - now)/1000) + ' ثانیه' : 'آزاد شده';
-
-            const html = `
+            const daysLeft = Math.ceil((unlockTime - now)/(1000*60*60*24));
+            
+            list.innerHTML += `
                 <div class="stake-item">
                     <div class="stake-lock">${isLocked ? '🔒' : '🔓'}</div>
-                    <div class="stake-header">
-                        <span>سپرده: ${s.amount.toLocaleString()} VIX</span>
-                        <span style="color:var(--green)">سود: +${s.profit}</span>
-                    </div>
-                    <div class="stake-time">${s.days} روزه | وضعیت: ${timeLeft}</div>
-                    <button class="btn-claim" ${isLocked ? 'disabled' : ''} onclick="claimStake(${index})">
-                        ${isLocked ? 'در انتظار پایان دوره...' : 'دریافت اصل + سود'}
-                    </button>
+                    <div class="stake-header"><span>سپرده: ${s.amount}</span><span style="color:var(--green)">سود: +${s.profit}</span></div>
+                    <div class="stake-time">${s.days} روزه | ${isLocked ? daysLeft + ' روز مانده' : 'آزاد شده'}</div>
+                    <button class="btn-claim" ${isLocked ? 'disabled' : ''} onclick="claimStake(${idx})">${isLocked ? 'در انتظار...' : 'دریافت'}</button>
                 </div>
             `;
-            list.innerHTML += html;
         });
     }
 
     function claimStake(idx) {
         const s = myStakes[idx];
         balance += (s.amount + s.profit);
-        myStakes.splice(idx, 1); // Remove from list
-        updateUI();
-        renderStakes();
-        playSnd('snd-win');
-        showAlert(`مبلغ ${s.amount+s.profit} ویکس به کیف پول اضافه شد`);
+        myStakes.splice(idx, 1);
+        updateUI(); renderStakes(); playSnd('snd-win'); showAlert('دریافت شد!');
     }
 
-    // --- GAME ENGINE ---
+    // --- GAME ---
     const cvs = document.getElementById('gameCanvas');
     const ctx = cvs.getContext('2d');
     let inGame=false, nextBet=0;
@@ -415,18 +417,15 @@
         let cd=5;
         document.getElementById('status-txt').style.display='block';
         document.getElementById('multi-disp').style.display='none';
-        document.getElementById('main-btn').className='main-btn btn-green';
-        document.getElementById('main-btn').disabled=false;
-        
-        // Button Logic
         const btn = document.getElementById('main-btn');
+        btn.className='main-btn btn-green'; btn.disabled=false;
+        
         btn.onclick = () => {
             const v = parseInt(document.getElementById('bet-in').value);
-            if(v > balance) return showAlert('موجودی کافی نیست');
+            if(v > balance) return showAlert('موجودی ناکافی');
             nextBet = v;
-            btn.className = 'main-btn btn-yellow';
-            btn.innerText = 'رزرو شد (لغو؟)';
-            btn.onclick = () => { nextBet=0; btn.innerText='شرط بندی'; btn.className='main-btn btn-green'; }; // Cancel logic
+            btn.className = 'main-btn btn-yellow'; btn.innerText = 'رزرو شد (لغو؟)';
+            btn.onclick = () => { nextBet=0; btn.innerText='شرط بندی'; btn.className='main-btn btn-green'; };
         };
         if(nextBet===0) btn.innerText='شرط بندی (راند بعد)';
 
@@ -441,81 +440,39 @@
         playSnd('snd-start');
         document.getElementById('status-txt').style.display='none';
         document.getElementById('multi-disp').style.display='block';
-        
         let crash = (Math.random()*5+1).toFixed(2); if(Math.random()<0.2) crash=1.00;
         let activeBet=0, activeAuto=0, isIn=false, st=Date.now();
 
         if(nextBet > 0) {
-            balance -= nextBet; 
-            activeBet = nextBet;
+            balance -= nextBet; activeBet = nextBet;
             activeAuto = parseFloat(document.getElementById('auto-in').value)||0;
-            isIn = true; nextBet = 0;
-            updateUI();
+            isIn = true; nextBet = 0; updateUI();
         }
 
         const btn = document.getElementById('main-btn');
         if(isIn) {
             btn.className = 'main-btn btn-yellow';
-            btn.onclick = () => {
-                // Manual Cashout
-                cashOut(activeBet, parseFloat(document.getElementById('multi-disp').innerText));
-                isIn = false; btn.onclick = null;
-            };
+            btn.onclick = () => { cashOut(activeBet, parseFloat(document.getElementById('multi-disp').innerText)); isIn=false; btn.onclick=null; };
         } else {
-            btn.className = 'main-btn btn-disabled';
-            btn.innerText = 'بازی در جریان...';
-            btn.disabled = true;
+            btn.className = 'main-btn btn-disabled'; btn.innerText = 'در جریان...'; btn.disabled = true;
         }
 
         let int = setInterval(()=>{
             let t = (Date.now()-st)/1000;
             let curr = Math.pow(Math.E, 0.12*t).toFixed(2);
-            
-            // Auto Cashout
-            if(isIn && activeAuto>1 && curr>=activeAuto) {
-                cashOut(activeBet, activeAuto); isIn=false;
-            }
-
-            if(curr >= crash) {
-                clearInterval(int);
-                doCrash(crash);
-            } else {
-                document.getElementById('multi-disp').innerText = curr+'x';
+            if(isIn && activeAuto>1 && curr>=activeAuto) { cashOut(activeBet, activeAuto); isIn=false; }
+            if(curr >= crash) { clearInterval(int); doCrash(crash); }
+            else { 
+                document.getElementById('multi-disp').innerText = curr+'x'; 
                 if(isIn) btn.innerText = `برداشت (${Math.floor(activeBet*curr)})`;
-                draw(curr, false);
+                draw(curr, false); 
             }
         }, 30);
     }
 
-    function cashOut(amt, mult) {
-        playSnd('snd-win');
-        let win = Math.floor(amt*mult);
-        balance += win;
-        updateUI();
-        const btn = document.getElementById('main-btn');
-        btn.className = 'main-btn btn-green';
-        btn.innerText = `بردی: ${win}`;
-        btn.disabled = true;
-    }
-
-    function doCrash(v) {
-        playSnd('snd-crash');
-        const m = document.getElementById('multi-disp');
-        m.style.color = '#ef4444'; m.innerText = v+'x';
-        document.getElementById('status-txt').innerText = 'منفجر شد!';
-        document.getElementById('status-txt').style.display='block';
-        draw(v, true);
-        setTimeout(()=>{ m.style.color='white'; gameLoop(); }, 3000);
-    }
-
-    function draw(v,c){
-        ctx.clearRect(0,0,cvs.width,cvs.height);
-        let p=Math.min((v-1)/5,1);
-        let x=p*(cvs.width-50); let y=cvs.height-(p*(cvs.height-100))-30;
-        ctx.beginPath();ctx.lineWidth=4;ctx.strokeStyle=c?'#ef4444':'#22c55e';
-        ctx.moveTo(0,cvs.height);ctx.quadraticCurveTo(x/2,cvs.height,x,y);ctx.stroke();
-        ctx.beginPath();ctx.fillStyle='white';ctx.arc(x,y,6,0,Math.PI*2);ctx.fill();
-    }
+    function cashOut(a, m) { playSnd('snd-win'); balance += Math.floor(a*m); updateUI(); document.getElementById('main-btn').innerText=`بردی: ${Math.floor(a*m)}`; document.getElementById('main-btn').className='main-btn btn-green'; }
+    function doCrash(v) { playSnd('snd-crash'); const m = document.getElementById('multi-disp'); m.style.color='#ef4444'; m.innerText=v+'x'; draw(v, true); setTimeout(()=>{m.style.color='white'; gameLoop();}, 3000); }
+    function draw(v,c){ ctx.clearRect(0,0,cvs.width,cvs.height); let p=Math.min((v-1)/5,1); let x=p*(cvs.width-50); let y=cvs.height-(p*(cvs.height-100))-30; ctx.beginPath();ctx.lineWidth=4;ctx.strokeStyle=c?'#ef4444':'#22c55e';ctx.moveTo(0,cvs.height);ctx.quadraticCurveTo(x/2,cvs.height,x,y);ctx.stroke();ctx.beginPath();ctx.fillStyle='white';ctx.arc(x,y,6,0,Math.PI*2);ctx.fill(); }
 
     // --- UTILS ---
     function updateUI() { 
@@ -526,6 +483,8 @@
     function showAlert(m) { const b=document.getElementById('alert'); b.innerText=m; b.style.display='block'; setTimeout(()=>b.style.display='none',2000); }
     function copy(t) { navigator.clipboard.writeText(t); showAlert('کپی شد'); }
     function setBet(p) { playSnd('snd-click'); document.getElementById('bet-in').value=Math.floor(balance*p); }
+    function sendChat(){ const i=document.getElementById('chat-in'); if(i.value){ const d=document.createElement('div'); d.className='chat-msg'; d.innerHTML=`<b>${user.first_name}</b>: ${i.value}`; document.getElementById('chat-box').appendChild(d); i.value=''; } }
+    function spinWheel(){ if(balance<100)return showAlert('۱۰۰ ویکس نیاز دارید'); balance-=100; updateUI(); const w=document.getElementById('wheel'); w.style.transform = `rotate(-${1800 + Math.floor(Math.random()*360)}deg)`; setTimeout(()=>{ playSnd('snd-win'); balance+=50; updateUI(); showAlert('۵۰ ویکس برنده شدید!'); w.style.transform='rotate(0deg)'; }, 4000); }
     
     // Audio
     let musicOn=false, sfxOn=true;
@@ -534,11 +493,7 @@
     function toggleSFX(){ sfxOn=!sfxOn; document.getElementById('btn-sfx').classList.toggle('off'); }
     function playSnd(id){ if(!sfxOn && id!=='snd-bg')return; try{const a=document.getElementById(id);a.currentTime=0;a.play().catch(()=>{});}catch(e){} }
 
-    // Init
-    resize(); updateUI(); gameLoop();
-    setInterval(async ()=>{
-        try{const r=await fetch('https://api.coingecko.com/api/v3/simple/price?ids=the-open-network&vs_currencies=usd');const d=await r.json();if(d['the-open-network'])TON_PRICE=d['the-open-network'].usd; document.getElementById('price-tag').innerText=`1 TON = ${Math.floor(TON_PRICE/VIX_PRICE)} VIX`;}catch(e){}
-    }, 60000);
+    initApp();
 </script>
 </body>
 </html>
